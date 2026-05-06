@@ -5,7 +5,7 @@ generated_at: 2026-05-06
 
 # Card-writing in ai_tutor sessions
 
-**Card design lives in the `mochi` skill** (`~/.claude/skills/mochi/SKILL.md`). That is the canonical reference for the six commitments, templates (T1–T10), anti-patterns, source quality, worked examples, and the pre-push self-check.
+**Card design lives in the `mochi` skill** (`skills/mochi/SKILL.md` in this repo, also symlinked to `~/.claude/skills/mochi/` so it loads as a user-level skill anywhere). That is the canonical reference for the six commitments, templates (T1–T10), anti-patterns, source quality, worked examples, and the pre-push self-check.
 
 This file is the ai_tutor-specific layer on top: when to propose during a tutoring session, and how to log what gets pushed.
 
