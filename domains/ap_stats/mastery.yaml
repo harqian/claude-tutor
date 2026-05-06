@@ -1,0 +1,225 @@
+domain: ap_stats
+last_updated: 2026-05-04T19:00:00-07:00
+
+summary: |
+  Session on 2026-05-04 (9 days to exam): full diagnostic across inference
+  (CI interpretation, paired vs independent identification, pooled vs unpooled
+  WHY, scope-of-inference 2x2) — all solid after probing. Self-reported strong
+  on the rest of the curriculum (untested this session). Slope inference taught
+  end-to-end: t-procedure analogy, SE_b (formula sheet), df = n-2 (derived via
+  the constraint argument: each estimated parameter imposes one linear
+  constraint on residuals), H0/Ha (twice flipped H0/Ha during the session — first
+  on 2-prop, then on slope; saved as a recurring pattern), LINER conditions,
+  and reading regression printouts. Practiced rubric-correct HT conclusion
+  phrasing on a Minitab-style example and surfaced the evidence-vs-design
+  conflation (significance ≠ generalizability). Slope inference now solid.
+
+# Per-concept state. Update in place each session.
+# State: unseen | shaky | solid (for 'solid', "self-reported" means he claims
+# strength but the session didn't probe it).
+concepts:
+  - slug: univariate-graphical
+    state: solid
+    notes: self-reported, not probed this session
+  - slug: univariate-numerical
+    state: solid
+    notes: self-reported, not probed this session
+  - slug: bivariate-categorical
+    state: solid
+    notes: self-reported, not probed this session
+  - slug: bivariate-quantitative
+    state: solid
+    notes: self-reported, not probed this session
+  - slug: sampling-methods
+    state: solid
+    notes: probed via scope-of-inference; nailed after framing pivot
+  - slug: experimental-design
+    state: solid
+    notes: probed via scope-of-inference 2x2; took 7 turns of probing but locked the model (random assignment fights confounding, random sampling fights selection bias)
+  - slug: probability-rules
+    state: solid
+    notes: self-reported, not probed this session
+  - slug: random-variables
+    state: solid
+    notes: self-reported, not probed; "always plus, never minus" combination rule untested
+  - slug: binomial-geometric
+    state: solid
+    notes: self-reported, not probed this session
+  - slug: sampling-dist-proportion
+    state: solid
+    notes: self-reported, not probed this session
+  - slug: sampling-dist-mean
+    state: solid
+    notes: self-reported, not probed this session
+  - slug: ci-proportion
+    state: solid
+    notes: probed CI interpretation; nailed repeated-sampling framing with one minor phrasing tighten ('it is the interval that is random, p is fixed')
+  - slug: ht-proportion
+    state: solid
+    notes: implicit via 2-prop probe; not directly tested
+  - slug: two-prop-inference
+    state: solid
+    notes: probed pooled vs unpooled WHY; initial sign flip on H0 (said 'assumes different'), recovered fast after redirect to 'what does H0 say?' Now solid on the pooled-under-H0 logic
+  - slug: ci-mean
+    state: solid
+    notes: self-reported, not probed this session
+  - slug: ht-mean
+    state: solid
+    notes: paired-vs-independent identification probed (see two-sample-mean); other aspects self-reported
+  - slug: two-sample-mean
+    state: solid
+    notes: probed paired vs independent; initial framing was 'two populations' which is wrong criterion. Locked after I introduced the shuffle test (can you randomly reorder one group's data without losing information? no => paired)
+  - slug: chi-square-gof
+    state: solid
+    notes: self-reported, not probed this session
+  - slug: chi-square-independence
+    state: solid
+    notes: self-reported, not probed; the GOF/independence/homogeneity selection trap untested
+  - slug: inference-slope
+    state: solid
+    notes: |
+      Taught end-to-end this session. Locked: t-procedure analog to means,
+      SE_b on formula sheet, df = n-2 (derived via constraint argument and
+      generalized to chi-square df via the same rule), H0: β = 0 / Ha: β ≠ 0,
+      LINER conditions (E was the blank; equal-variance / homoscedasticity),
+      reading SE_b/t/df/p-value off Minitab-style regression output, rubric-
+      correct conclusion phrasing. One earlier flip: said H0 was "non-zero
+      linear relationship" (that's Ha); same H0/Ha flip pattern as 2-prop.
+      Carded the H0-always-null rule (CXdNB2KW) to fix the recurring error.
+
+# Card inventory across both spaced-repetition systems. Pre-existing cards
+# (created before this session) are catalogued by source + concept slug so
+# future sessions don't re-create duplicates. Cards created in a session
+# also get a mochi_cards block in the relevant log entry below; the inventory
+# here is the canonical lookup ('do I already have a card for concept X?').
+cards:
+  totals:
+    mochi_important_ap_deck: 20   # stats only; deck also holds 4 physics-em cards. 7 added on 2026-05-04
+    zippyflash: 11                # stats-tagged only; library also has 5 topology + 1 misc
+  cross_cutting:  # meta-cards that apply across multiple inference procedures
+    mochi:
+      - {id: 4V4RXMwg, granularity: conceptual, front: "Why estimating a parameter costs a degree of freedom (df = n - constraints; covers t, slope, χ² GOF, χ² independence)", session: 2026-05-04}
+      - {id: CXdNB2KW, granularity: conceptual, front: "H0 is always the null/no-effect/equality version (rule across all HTs; prosecutor mnemonic)", session: 2026-05-04}
+      - {id: SyJe7Rrq, granularity: conceptual, front: "HT conclusion 4-piece rubric template (compare → decide → 'convincing evidence' → population scope; covers all HTs)", session: 2026-05-04}
+  by_concept:
+    sampling-methods:
+      mochi:
+        - {id: ILdotUEY, granularity: conceptual, front: "Random sampling vs random assignment - 2x2 of conclusions", session: 2026-05-04}
+      zippyflash:
+        - {id: cc2b7163-187d-4198-ac76-df18377f15b3, granularity: atomic, front: "Random condition for inference"}
+        - {id: a240da0b-3ac0-4b4b-8e40-14968074c962, granularity: atomic, front: "Independent condition for inference"}
+    experimental-design:
+      mochi:
+        - {id: ILdotUEY, granularity: conceptual, front: "Random sampling vs random assignment - 2x2 of conclusions", session: 2026-05-04}
+    ci-proportion:
+      mochi:
+        - {id: 8lO1K6XV, granularity: tabled, front: "1-proportion z procedures conditions table (R/I/N with p0 vs p_hat note)"}
+        - {id: PHF2PUKb, granularity: conceptual, front: "How to go from CI to test in mean and proportion inference"}
+      zippyflash:
+        - {id: eca52be6-2445-4ecc-abda-96bcbcdf585f, granularity: atomic, front: "Normal/Large Counts for 1-sample z-interval for proportions"}
+        - {id: cc2b7163-187d-4198-ac76-df18377f15b3, granularity: atomic, front: "Random condition (general)"}
+        - {id: a240da0b-3ac0-4b4b-8e40-14968074c962, granularity: atomic, front: "Independent condition (general)"}
+    ht-proportion:
+      mochi:
+        - {id: 8lO1K6XV, granularity: tabled, front: "1-proportion z procedures conditions table"}
+        - {id: PHF2PUKb, granularity: conceptual, front: "CI <-> test correspondence"}
+      zippyflash:
+        - {id: ecc72b08-744a-4d15-a3e6-67d1e73277c3, granularity: atomic, front: "Normal/Large Counts for 1-sample z-test for proportions"}
+    two-prop-inference:
+      mochi:
+        - {id: qVIcGPIB, granularity: tabled, front: "2-proportion z procedures conditions (with pooled p_hat_c note)"}
+        - {id: dUMPYSdO, granularity: conceptual, front: "Why 2-prop test pools but CI doesn't (H0 logic)", session: 2026-05-04}
+        - {id: fePs67RJ, granularity: tabled, front: "Paired z procedures conditions (rare)"}
+      zippyflash:
+        - {id: 186f5a32-a6ab-4556-9add-eb04967b3627, granularity: atomic, front: "Large Counts for 2-sample z-interval for proportions"}
+        - {id: fff9caa4-05f3-483f-9d02-47fef1c7bd69, granularity: atomic, front: "Large Counts for 2-sample z-test for proportions"}
+    ci-mean:
+      mochi:
+        - {id: vXK2GP4Y, granularity: tabled, front: "1-sample t procedures conditions (df = n-1)"}
+        - {id: AIJHrpGA, granularity: conceptual, front: "How mean inference builds off proportion inference"}
+      zippyflash:
+        - {id: 3c14476b-2f2a-4522-a54f-bc7f2bd782d9, granularity: atomic, front: "1-sample t-test sample size condition (Normal/Large Counts)"}
+    ht-mean:
+      mochi:
+        - {id: vXK2GP4Y, granularity: tabled, front: "1-sample t procedures conditions"}
+        - {id: vl9nvfAI, granularity: tabled, front: "Matched-pairs t procedures conditions (df = n_pairs - 1)"}
+        - {id: AIJHrpGA, granularity: conceptual, front: "How mean inference builds off proportion inference"}
+      zippyflash:
+        - {id: 4326d24b-4939-4174-ba55-8981e1848c94, granularity: atomic, front: "Normal/Large condition for 1-sample t-test"}
+        - {id: 8d92fb68-fd11-4b1b-aea3-36516b2b2cae, granularity: atomic, front: "Paired t-test condition vs 1-sample t-test conditions"}
+    two-sample-mean:
+      mochi:
+        - {id: nDuTghZg, granularity: tabled, front: "2-sample t procedures conditions (df from technology)"}
+        - {id: Ty8q7zFj, granularity: conceptual, front: "When to use paired vs two-sample t (examples)"}
+        - {id: yWwQvRrX, granularity: conceptual, front: "Paired vs independent: shuffle-test operational criterion", session: 2026-05-04}
+      zippyflash:
+        - {id: 288c4379-028d-43d2-a285-30628c3feb8d, granularity: atomic, front: "Normal/Large Counts for each sample in 2-sample t-test"}
+    chi-square-gof:
+      mochi:
+        - {id: l8b6GKNh, granularity: tabled, front: "chi-square GOF conditions (df = k-1)"}
+        - {id: oz9jMElk, granularity: tabled, front: "chi-square GOF test full description"}
+      zippyflash:
+        - {id: 986763d9-efb9-49d7-bc05-a0f5f958ab76, granularity: atomic, front: "Normal/Large Counts for chi-square test (general)"}
+    chi-square-independence:
+      mochi:
+        - {id: MjaY2aJl, granularity: tabled, front: "chi-square independence conditions (df = (r-1)(c-1))"}
+        - {id: aUrRgJlm, granularity: tabled, front: "chi-square homogeneity conditions"}
+        - {id: cofKONqb, granularity: tabled, front: "chi-square independence test full description"}
+        - {id: FaXXui9I, granularity: tabled, front: "chi-square homogeneity test full description"}
+      zippyflash:
+        - {id: 986763d9-efb9-49d7-bc05-a0f5f958ab76, granularity: atomic, front: "Normal/Large Counts for chi-square test (general; shared with GOF)"}
+    inference-slope:
+      mochi:
+        - {id: 54HFWf2o, granularity: tabled, front: "Regression t procedures conditions (LINER, df = n-2)"}
+        - {id: t8YWQ0wU, granularity: tabled, front: "LINER conditions for slope inference (with how-to-check + why-it-matters per letter)", session: 2026-05-04}
+  gaps:  # concepts with NO cards in either system; candidates for next-session card creation
+    - power / Type I / Type II relationships (not in Unit 9 directly; cross-cuts inference HTs)
+    - p-value interpretation (rubric-correct phrasing)
+    - CLT threshold reasoning (n >= 30 vs population-normal vs sample-roughly-symmetric)
+    - random variable combination rules (E(X+Y) always additive; Var(X +/- Y) = Var(X) + Var(Y) for independent, ALWAYS plus, even for X-Y)
+    - linear transformation rules for distributions (mean shifts and scales; sd only scales by |a|)
+
+# Selective log. Only entries worth remembering long-term.
+log:
+  - ts: 2026-05-04T17:30:00-07:00
+    mode: socratic
+    concept: multiple
+    note: |
+      Diagnostic + first-pass slope teaching. Probed: CI interpretation,
+      paired vs independent (introduced shuffle test), pooled vs unpooled
+      (initial backwards sign on H0 - good correction), scope of inference
+      2x2 (took 7 turns to derive but locked it). 3 card-worthy aha moments,
+      all carded mid-session. Slope teaching paused at df = n-2; resume from
+      'how many parameters did you estimate to compute residuals?'.
+    mochi_cards:
+      - id: yWwQvRrX
+        deck: important ap
+        front: "Paired vs independent samples: what's the operational test to tell them apart?"
+        back: "Can you randomly shuffle one group's data without losing information? Yes -> independent. No -> paired (each row in group A is linked to a specific row in group B by design)."
+      - id: dUMPYSdO
+        deck: important ap
+        front: "Why does the 2-prop z-test use pooled $\\hat{p}$ while the CI uses unpooled?"
+        back: "Test assumes $H_0: p_1 = p_2$, so both samples estimate one shared $p$ (pool). CI assumes nothing, so each sample estimates its own."
+      - id: ILdotUEY
+        deck: important ap
+        front: "Random sampling vs random assignment — which gives causal, which gives generalizable?"
+        back: "Assignment → causal (kills confounding). Sampling → generalizable (kills selection bias)."
+      - id: 4V4RXMwg
+        deck: important ap
+        front: "Why does estimating a parameter from your data cost a degree of freedom?"
+        back: "Each estimated parameter imposes one linear constraint on residuals. df = n - (parameters estimated). Generalizes to χ² GOF (df = k-1) and χ² independence (df = (r-1)(c-1)) via the same constraint argument."
+      - id: CXdNB2KW
+        deck: important ap
+        front: "H0 vs Ha: what's the rule for what goes into each?"
+        back: "H0 is always the null/no-effect/equality version. Ha is what you're trying to find evidence for. Prosecutor mnemonic: H0 is what the prosecutor doesn't want to be true; the data is the evidence."
+      - id: t8YWQ0wU
+        deck: important ap
+        front: "LINER conditions for slope inference — what each letter checks and why"
+        back: "L: linear (scatterplot/residual plot). I: independent observations. N: normal residuals. E: equal variance (homoscedasticity, residual plot is uniform band). R: random sample/assignment."
+      - id: SyJe7Rrq
+        deck: important ap
+        front: "HT conclusion: AP rubric template + the trap"
+        back: "4-piece skeleton: (1) compare p-value to α, (2) decision about H0, (3) 'convincing evidence' phrase, (4) population scope. Trap: significance ≠ generalizability; generalizability comes from sampling design, not p-value."
+
+generated_by: claude-opus-4-7
+generated_at: 2026-05-04

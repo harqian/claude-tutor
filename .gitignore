@@ -1,0 +1,11 @@
+# macOS
+.DS_Store
+
+# Claude Code local state
+.claude/settings.local.json
+.claude/worktrees/
+
+# Copyrighted SAT prep material — do not redistribute
+domains/sat_rw/sources/blackbook_2017.pdf
+domains/sat_rw/sources/blackbook_2017.txt
+domains/sat_rw/sources/blackbook_2017_raw.txt

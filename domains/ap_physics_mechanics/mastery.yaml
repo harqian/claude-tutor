@@ -1,0 +1,151 @@
+---
+generated_by: claude-opus-4-7
+generated_at: 2026-05-04
+---
+domain: ap_physics_mechanics
+last_updated: 2026-05-04
+summary: |
+  Strong calculus + algebra foundation; derivations fluent (eigenvalue solutions,
+  ring integrals, second-order infinitesimal logic). Equation-sheet aware.
+  Linear and angular momentum conservation are reflex-level. FBD discipline solid.
+  Orbital mechanics derivations clean.
+
+  Confirmed weakness is narrow and specific: energy conservation as a first reflex.
+  Doesn't generalize to other conservation laws (momentum reflexes are solid).
+  Sub-symptoms: (1) treats translational and rotational KE as either-or in rolling
+  problems, (2) fuzzy on bound vs unbound interpretation of negative total energy,
+  (3) doesn't factor out the dimensionless lever after the algebra finishes.
+
+  Mostly unprobed but predicted fine: projectile shortcuts, drag ODE, 2D collisions,
+  pendulums, specific I values for rod/sphere/hoop.
+concepts:
+  - slug: rolling-without-slipping
+    state: shaky
+    notes: knew sphere wins and why; missed translational KE term initially; needed prompting to reach for energy conservation
+  - slug: gravity-and-orbits
+    state: solid
+    notes: derived v_circ, E_total, v_esc cleanly; shaky on physical interpretation of E<0 vs E=0 vs E>0
+  - slug: rotational-energy
+    state: shaky
+    notes: KE_rot formula correct after a unit-check nudge; energy-split intuition needs reps
+  - slug: shm-basics
+    state: solid
+    notes: derived ω=√(k/m) via characteristic equation; phase sign slightly off but flagged uncertainty
+  - slug: momentum-conservation
+    state: solid
+    notes: railcar+mud probe — immediate reflex, correct directional justification (gravity vertical so horizontal momentum conserved)
+  - slug: angular-momentum
+    state: solid
+    notes: rotating-disk+person probe — immediate L conservation reflex, correct point-mass treatment (no parallel-axis), one algebra slip caught on re-check
+  - slug: newtons-laws-fbd
+    state: solid
+    notes: incline+friction probe — clean decomposition of mg, correct F_N balance, friction direction reasoning solid
+  - slug: torque-and-inertia
+    state: solid
+    notes: derived I_disk = ½MR² from I=∫r² dm using ring-element method; recognized (r+dr)² - r² ≈ 2r dr from second-order infinitesimal argument
+  - slug: work-energy-theorem
+    state: solid
+    notes: friction-slide drill — initially said "not conservation" but corrected with one prompt to use ΣW=ΔK; reframing reflex now installed
+  - slug: conservative-forces-pe
+    state: solid
+    notes: pendulum + spring-compression + sphere-rolling drills all framed cleanly on first try
+  - slug: collisions
+    state: shaky
+    notes: ballistic pendulum probe — initially carried energy conservation through the collision (classic inelastic-KE-loss trap); recovered with one prompt. Phase-separation reflex needs more reps.
+log:
+  - ts: 2026-05-04
+    mode: socratic
+    concept: rolling-without-slipping
+    note: |
+      Initial diagnostic. Sphere-vs-hoop probe revealed three symptoms in
+      energy-reflex weakness: (1) reaching for energy conservation as first
+      move, (2) recognizing rolling = trans + rot KE simultaneously, (3)
+      factoring out I/(mR²) as the dimensionless lever. Orbital mechanics
+      derivations clean; physical meaning of negative total energy needs work.
+      SHM derivation overshoots AP via eigenvalue route; AP fast path
+      (ẍ = -ω²x → read off ω²) introduced.
+    mochi_cards:
+      - id: 0nNW4BMg
+        deck: important ap
+        front: "Two solid spheres, different $m$ and $R$, same incline and $h$, rolling without slipping — which wins?"
+        back: "Tie. Same shape → same $I/(mR^2)$, so $m$ and $R$ cancel."
+  - ts: 2026-05-04
+    mode: socratic
+    concept: torque-and-inertia
+    note: |
+      Diagnostic round 2. Probed momentum, angular momentum, FBD, and I
+      derivation. All four solid. Energy-reflex weakness is now confirmed as
+      isolated to energy specifically, not a generalized conservation-law
+      weakness. Card pushed for I-derivation method via ring elements.
+    mochi_cards:
+      - id: BWsAzTmn
+        deck: important ap
+        front: "How do you set up $I = \\int r^2 \\, dm$ for any rotationally symmetric 2D shape?"
+        back: "Slice into rings at $r$ thickness $dr$, area $= 2\\pi r \\, dr$. $dm = \\sigma \\cdot 2\\pi r \\, dr$. Integrate $r^2 \\, dm$. Disk → $\\tfrac{1}{2}MR^2$."
+      - id: llxuCzTt
+        deck: important ap
+        front: "$v_\\text{circ}$ for satellite at radius $r$ around mass $M$?"
+        back: "$\\sqrt{GM/r}$. From $GMm/r^2 = mv^2/r$."
+      - id: QgQgRSZy
+        deck: important ap
+        front: "$E_\\text{total}$ of circular orbit?"
+        back: "$-GMm/(2r)$. $K = +GMm/(2r)$, $U = -GMm/r$. $|K| = \\tfrac{1}{2}|U|$."
+      - id: hcT2CzKc
+        deck: important ap
+        front: "$v_\\text{esc}$ from surface (mass $M$, radius $R$)?"
+        back: "$\\sqrt{2GM/R}$. Set $E = 0$: $\\tfrac{1}{2}mv^2 = GMm/R$. Equals $\\sqrt{2}\\cdot v_\\text{circ}$."
+      - id: l15Ub0vH
+        deck: important ap
+        front: "Sign of $E_\\text{total}$ for an orbit?"
+        back: "$E<0$ bound (ellipse), $E=0$ marginal (parabola), $E>0$ unbound (hyperbola). Convention: $U_g = 0$ at $r=\\infty$."
+      - id: w4DkBXO3
+        deck: important ap
+        front: "$\\ddot{x} = -c \\cdot x$. Angular frequency?"
+        back: "$\\omega = \\sqrt{c}$. Match against template $\\ddot{x} = -\\omega^2 x$."
+      - id: pPON13GU
+        deck: important ap
+        front: "When is momentum conserved with external forces (e.g. gravity)?"
+        back: "Component-wise. Conserved in any direction with no external force. Mud falling into railcar: gravity vertical, $p_x$ conserved → $Mv_0 = (M+m)v_f$."
+      - id: 0fHYj0no
+        deck: important ap
+        front: "Person on rotating disk: how do they contribute to $I$?"
+        back: "Point mass: $I_\\text{person} = mr^2$. No parallel-axis (that's for extended objects). Total $I = I_\\text{disk} + mr^2$."
+      - id: kUXOcdCQ
+        deck: important ap
+        front: "Block sliding down ramp angle $\\theta$, kinetic friction $\\mu_k$. Acceleration?"
+        back: "$a = g(\\sin\\theta - \\mu_k \\cos\\theta)$. $F_N = mg\\cos\\theta$, $ma = mg\\sin\\theta - \\mu_k F_N$."
+  - ts: 2026-05-04
+    mode: socratic
+    concept: conservative-forces-pe
+    note: |
+      Energy-reflex drill, 5 framing scenarios. Pendulum, spring-compression,
+      and rolling-sphere all framed cleanly on first try (sub-symptom 1 from
+      morning probe — trans+rot KE simultaneously — now installed). Friction
+      slide needed one prompt to switch from "not conservation" to work-energy
+      theorem. Ballistic pendulum surfaced a NEW sub-symptom: phase-separation
+      in collision-then-X problems (he carried energy through an inelastic
+      collision). Recovered with one prompt. New refined diagnosis: the
+      energy reflex is now solid for single-phase problems, but multi-phase
+      problems where collision precedes a swing/slide need explicit phase
+      decomposition. Worth more reps.
+    mochi_cards:
+      - id: q9YjAEsM
+        deck: important ap
+        front: "Pendulum dropped from angle $\\theta_0$, length $L$. Speed at bottom?"
+        back: "$v = \\sqrt{2gL(1-\\cos\\theta_0)}$. Height drop $L(1-\\cos\\theta_0)$, energy conservation."
+      - id: amGJpOjZ
+        deck: important ap
+        front: "Block at $v_0$ hits spring $k$. Max compression?"
+        back: "$x_\\text{max} = v_0\\sqrt{m/k}$. All KE → spring PE at turnaround."
+      - id: WPvwdFtL
+        deck: important ap
+        front: "Block at $v_0$ slides on surface with $\\mu_k$. Stop distance?"
+        back: "$d = v_0^2/(2\\mu_k g)$. Friction does $-\\mu_k m g d$ work; set equal to $-\\tfrac{1}{2}mv_0^2$. Use $\\sum W = \\Delta K$, not energy conservation."
+      - id: hMNUTcLI
+        deck: important ap
+        front: "Solid sphere rolls down ramp height $h$. Speed at bottom?"
+        back: "$v = \\sqrt{2gh/(1 + I/(mR^2))} = \\sqrt{10gh/7}$ for sphere. Both translational AND rotational KE."
+      - id: 76NYMx7T
+        deck: important ap
+        front: "Bullet $m$, $v_0$ embeds in block $M$ which swings to height $h$. Find $v_0$."
+        back: "Two phases. (1) Inelastic collision → momentum: $mv_0 = (m+M)v_f$. (2) Swing → energy: $v_f = \\sqrt{2gh}$. So $v_0 = (m+M)/m \\cdot \\sqrt{2gh}$. Don't carry energy through inelastic collision."

@@ -1,0 +1,66 @@
+target_type: ap_exam
+target_id: AP-PHYS-C-MECH
+deadline: 2026-05-13
+mastery_threshold: 0.80
+weighting:
+  - id: 1
+    title: Kinematics
+    weight: 0.12
+    concepts:
+      - kinematics-1d
+      - kinematics-2d-vectors
+      - relative-motion
+  - id: 2
+    title: Force and Translational Dynamics
+    weight: 0.22
+    concepts:
+      - center-of-mass
+      - newtons-laws-fbd
+      - gravity-and-orbits
+      - friction-and-resistive
+      - spring-force
+      - circular-motion
+  - id: 3
+    title: Work, Energy, and Power
+    weight: 0.18
+    concepts:
+      - work-energy-theorem
+      - conservative-forces-pe
+      - power
+  - id: 4
+    title: Linear Momentum
+    weight: 0.14
+    concepts:
+      - momentum-impulse
+      - momentum-conservation
+      - collisions
+  - id: 5
+    title: Torque and Rotational Dynamics
+    weight: 0.12
+    concepts:
+      - rotational-kinematics
+      - torque-and-inertia
+      - rotational-dynamics
+  - id: 6
+    title: Energy and Momentum of Rotating Systems
+    weight: 0.12
+    concepts:
+      - rotational-energy
+      - angular-momentum
+      - rolling-without-slipping
+      - gravity-and-orbits
+  - id: 7
+    title: Oscillations
+    weight: 0.10
+    concepts:
+      - shm-basics
+      - shm-energy
+      - pendulums
+notes: >
+  AP Physics C: Mechanics on the 2024+ CED. 7 units, continuous numbering with E/M
+  (which is units 8-13). Weights chosen as midpoints of CED ranges; sum to 1.00.
+  `gravity-and-orbits` spans U2 (gravitational force as a Newtonian force) and U6
+  (orbits, Kepler) by design. Deadline 2026-05-13 per Harrison's estimate; verify
+  against official 2026 schedule.
+generated_by: claude-opus-4-7
+generated_at: 2026-05-03

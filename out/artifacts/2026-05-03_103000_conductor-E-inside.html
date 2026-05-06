@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>E = 0 inside a conductor</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.11.0/lib/p5.min.js"></script>
+  <style>
+    :root {
+      --bg: #fafaf7; --fg: #1a1a1a; --muted: #666;
+      --cplus: #c05621; --cminus: #2b6cb0;
+      --cgauss: #2f855a; --cfield: #805ad5;
+    }
+    html, body { background: var(--bg); color: var(--fg); margin: 0; }
+    body { font: 16px/1.6 ui-serif, Georgia, serif; max-width: 680px; margin: 0 auto; padding: 32px 20px 60px; }
+    h1 { font: 700 1.45rem/1.2 ui-sans-serif, system-ui, sans-serif; margin: 0 0 0.6rem; }
+    h2 { font: 600 1.05rem/1.2 ui-sans-serif, system-ui, sans-serif; margin: 2rem 0 0.5rem; }
+    canvas { display: block; border-radius: 3px; }
+    .controls { display: flex; gap: 8px; margin: 10px 0 8px; flex-wrap: wrap; }
+    button {
+      font: 14px ui-sans-serif, system-ui, sans-serif;
+      background: transparent; border: 1px solid #ccc;
+      padding: 5px 14px; border-radius: 4px; cursor: pointer;
+    }
+    button.active { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+    button:hover:not(.active) { background: #eee; }
+    .legend { display: flex; gap: 16px; font-size: 13px; color: var(--muted); margin: 6px 0 14px; flex-wrap: wrap; }
+    .sw { display: inline-block; width: 10px; height: 10px; border-radius: 50%; vertical-align: middle; margin-right: 3px; }
+    .sw.line { border-radius: 0; width: 18px; height: 3px; }
+    .exp-panel { background: #f0f0ea; border-radius: 5px; padding: 12px 16px; font-size: 15px; display: none; }
+    .exp-panel.visible { display: block; }
+    hr { border: none; border-top: 1px solid #ddd; margin: 2rem 0; }
+    ol { padding-left: 1.4em; }
+    li { margin-bottom: 0.4em; }
+    .chain { color: var(--cgauss); font-weight: 600; }
+  </style>
+</head>
+<body>
+
+<h1>Why $E = 0$ inside a conductor at equilibrium</h1>
+
+<p>Step through the three phases. <strong style="color:var(--cminus)">Blue dots</strong> are free electrons; <strong style="color:var(--cplus)">orange dots</strong> are fixed lattice ions.</p>
+
+<div class="controls">
+  <button id="btn0" class="active">1. Neutral, no field</button>
+  <button id="btn1">2. Apply E rightward</button>
+  <button id="btn2">3. Equilibrium</button>
+</div>
+
+<div id="sketch-wrap"></div>
+
+<div class="legend">
+  <span><span class="sw" style="background:var(--cplus)"></span>fixed + ions</span>
+  <span><span class="sw" style="background:var(--cminus)"></span>free − electrons</span>
+  <span><span class="sw line" style="background:var(--cgauss)"></span>Gaussian surface</span>
+  <span><span class="sw" style="background:var(--cfield)"></span>applied field</span>
+</div>
+
+<div id="exp0" class="exp-panel visible">
+  <strong>Neutral bulk:</strong> free electrons are paired with ions throughout the whole interior,
+  not just the surface. Any interior Gaussian surface encloses zero net charge:
+  $q_\text{enc} = 0$, so $\oint \vec{E} \cdot d\vec{A} = 0$.
+</div>
+<div id="exp1" class="exp-panel">
+  <strong>Apply $E$ rightward:</strong> free electrons throughout the bulk feel $\vec{F} = q\vec{E}$
+  and begin drifting left. This is not equilibrium — the charges are still accelerating.
+  The system keeps adjusting until the internal field is canceled.
+</div>
+<div id="exp2" class="exp-panel">
+  <strong>Equilibrium:</strong> electrons have shifted left, exposing positive ions on the right.
+  The induced surface charge creates an equal and opposite internal $\vec{E}$.
+  Net result: $\vec{E} = 0$ everywhere inside. Gauss confirms: $q_\text{enc} = 0$ for any
+  interior surface, so all net charge lives on the outer surface only.
+</div>
+
+<hr />
+
+<h2>The argument</h2>
+<ol>
+  <li>Conductor: free electrons present <em>throughout the bulk</em>, one per lattice ion, everywhere.</li>
+  <li>Equilibrium: nothing accelerating $\Rightarrow$ $\vec{F} = q\vec{E} = 0$ on every free electron $\Rightarrow$ $\vec{E}_\text{inside} = 0$.</li>
+  <li>Gauss on any interior surface: $E = 0$ on it $\Rightarrow$ $\oint\vec{E}\cdot d\vec{A} = 0$ $\Rightarrow$ $q_\text{enc} = 0$ $\Rightarrow$ net charge on surface only.</li>
+</ol>
+
+<p><span class="chain">Chain:</span> free charges everywhere + equilibrium $\Rightarrow$ $E=0$ inside $\Rightarrow$ Gauss $\Rightarrow$ net charge on surface only.</p>
+
+<script>
+let phase = 0;
+
+const sk = (p) => {
+  const W = 640, H = 340;
+  const cx = W/2, cy = H/2, R = 130;
+
+  const PLUS  = [192, 86, 33];
+  const MINUS = [43, 108, 176];
+  const GAUSS = [47, 133, 90];
+  const FIELD = [128, 90, 213];
+  const COND  = [228, 222, 210];
+
+  const ions = [];
+  const SP = 30;
+  for (let row = -5; row <= 5; row++) {
+    for (let col = -6; col <= 6; col++) {
+      const x = col * SP + (Math.abs(row) % 2 === 1 ? SP/2 : 0);
+      const y = row * SP * 0.87;
+      if (x*x + y*y < (R-16)*(R-16)) ions.push({x: cx+x, y: cy+y});
+    }
+  }
+
+  const elec = ions.map(ion => ({
+    x: ion.x + p.random(-2,2),
+    y: ion.y + p.random(-2,2),
+    bx: ion.x, by: ion.y
+  }));
+
+  let shift = 0;
+  let fld   = 0;
+  const gaussR = 60;
+
+  p.setup = () => {
+    const c = p.createCanvas(W, H);
+    c.parent('sketch-wrap');
+  };
+
+  p.draw = () => {
+    const tShift = phase === 2 ? 24 : 0;
+    const tFld   = phase >= 1 ? 1 : 0;
+    shift = p.lerp(shift, tShift, 0.045);
+    fld   = p.lerp(fld,   tFld,   0.045);
+
+    p.background(250, 250, 247);
+
+    p.fill(...COND); p.noStroke(); p.circle(cx, cy, R*2);
+    p.noFill(); p.stroke(150); p.strokeWeight(2); p.circle(cx, cy, R*2);
+
+    if (fld > 0.05) drawExtField();
+
+    p.noFill(); p.stroke(...GAUSS); p.strokeWeight(1.5);
+    p.drawingContext.setLineDash([7, 6]);
+    p.circle(cx, cy, gaussR*2);
+    p.drawingContext.setLineDash([]);
+
+    if (shift > 2) drawSurface(shift/24);
+
+    for (const ion of ions) {
+      p.fill(...PLUS); p.noStroke(); p.circle(ion.x, ion.y, 11);
+      p.fill(255); p.textAlign(p.CENTER, p.CENTER); p.textSize(8); p.text('+', ion.x, ion.y+0.5);
+    }
+
+    for (const e of elec) {
+      const dy = e.by - cy;
+      const mx = Math.sqrt(Math.max(0,(R-10)*(R-10)-dy*dy));
+      const tx = Math.max(cx-mx, Math.min(cx+mx, e.bx - shift*0.42));
+      e.x = p.lerp(e.x, tx, 0.05);
+      p.fill(...MINUS); p.noStroke(); p.circle(e.x, e.y, 10);
+      p.fill(255); p.textAlign(p.CENTER, p.CENTER); p.textSize(9); p.text('\u2212', e.x, e.y+0.5);
+    }
+
+    drawInteriorLabel();
+
+    p.fill(110); p.noStroke(); p.textAlign(p.CENTER, p.TOP); p.textSize(11);
+    const caps = [
+      'Neutral — locally balanced everywhere',
+      'E applied — free charges accelerating (not equilibrium)',
+      'Equilibrium — E = 0 inside, net charge on surface only'
+    ];
+    p.text(caps[phase], cx, 8);
+  };
+
+  function drawExtField() {
+    p.stroke(...FIELD, Math.round(200*fld)); p.strokeWeight(1.5);
+    const ys = [cy-55, cy-18, cy+18, cy+55];
+    for (const y of ys) {
+      arrowH(cx-R-55, y, cx-R-8, y, 7);
+      arrowH(cx+R+8,  y, cx+R+55, y, 7);
+    }
+    if (phase === 1) {
+      p.fill(...FIELD, 200); p.noStroke(); p.textSize(12); p.textAlign(p.RIGHT, p.BOTTOM);
+      p.text('E applied', cx-R-12, cy-62);
+    }
+  }
+
+  function drawSurface(t) {
+    const alpha = Math.round(220 * t);
+    for (let a = -75; a <= 75; a += 20) {
+      const rad = a * Math.PI / 180;
+      const lx = cx + R * Math.cos(Math.PI + rad);
+      const ly = cy + R * Math.sin(Math.PI + rad);
+      p.fill(...MINUS, alpha); p.noStroke(); p.circle(lx, ly, 9);
+      const rx = cx + R * Math.cos(rad);
+      const ry = cy + R * Math.sin(rad);
+      p.fill(...PLUS, alpha); p.noStroke(); p.circle(rx, ry, 9);
+    }
+  }
+
+  function drawInteriorLabel() {
+    p.fill(...GAUSS); p.noStroke(); p.textAlign(p.CENTER, p.CENTER); p.textSize(11);
+    if (phase === 0) {
+      p.text('qenc = 0', cx, cy+3);
+    } else if (phase === 1 && fld > 0.3) {
+      p.fill(...FIELD, 180); p.textSize(10);
+      p.text('charges still moving...', cx, cy+3);
+    } else if (phase === 2 && shift > 10) {
+      p.fill(...GAUSS);
+      p.text('E = 0   qenc = 0', cx, cy+3);
+    }
+  }
+
+  function arrowH(x1, y1, x2, y2, hs) {
+    p.line(x1, y1, x2, y2);
+    const a = Math.atan2(y2-y1, x2-x1);
+    p.push(); p.translate(x2, y2); p.rotate(a);
+    p.line(0, 0, -hs, -hs*0.5);
+    p.line(0, 0, -hs,  hs*0.5);
+    p.pop();
+  }
+};
+
+new p5(sk);
+
+const panels = ['exp0','exp1','exp2'];
+const buttons = ['btn0','btn1','btn2'];
+
+buttons.forEach((id, i) => {
+  document.getElementById(id).addEventListener('click', () => {
+    phase = i;
+    buttons.forEach((bid, j) => document.getElementById(bid).classList.toggle('active', j===i));
+    panels.forEach((pid, j) => document.getElementById(pid).classList.toggle('visible', j===i));
+  });
+});
+</script>
+
+</body>
+</html>

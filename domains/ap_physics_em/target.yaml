@@ -1,0 +1,48 @@
+target_type: ap_exam
+target_id: AP-PHYS-C-EM
+deadline: 2026-05-13
+mastery_threshold: 0.80
+weighting:
+  - id: 8
+    title: Electric Charges, Fields, and Gauss's Law
+    weight: 0.20
+    concepts:
+      - coulomb-gauss
+  - id: 9
+    title: Electric Potential
+    weight: 0.15
+    concepts:
+      - electric-potential
+  - id: 10
+    title: Conductors and Capacitors
+    weight: 0.12
+    concepts:
+      - conductors-equilibrium
+      - capacitors-dielectrics
+  - id: 11
+    title: Electric Circuits
+    weight: 0.20
+    concepts:
+      - dc-circuits
+      - rc-circuits
+  - id: 12
+    title: Magnetic Fields and Electromagnetism
+    weight: 0.15
+    concepts:
+      - biot-savart-ampere
+      - magnetic-force
+  - id: 13
+    title: Electromagnetic Induction
+    weight: 0.18
+    concepts:
+      - faraday-lenz
+      - inductors-rl-lc
+notes: >
+  Migrated 2026-05-03 from legacy 5-unit CED to 2024+ 6-unit CED. Unit numbering
+  is continuous with Mechanics (which is units 1-7); E/M is 8-13. Concept slugs
+  unchanged so mastery.yaml state survives. Diagnostic (2026-05-03) surfaced gaps
+  in: conductors-equilibrium, capacitors-dielectrics, rc-circuits (energy vs
+  charge), faraday-lenz (field direction). Biot-Savart label-only gap; physics
+  solid. Inductor/switch intuition strong. Exam ~2026-05-13 (estimated).
+generated_by: claude-opus-4-7
+generated_at: 2026-05-03

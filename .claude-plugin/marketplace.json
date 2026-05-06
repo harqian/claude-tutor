@@ -1,0 +1,13 @@
+{
+  "name": "ai_tutor-local",
+  "owner": {
+    "name": "Harrison"
+  },
+  "plugins": [
+    {
+      "name": "ai_tutor",
+      "source": "./",
+      "description": "Harrison's personal AI-tutor system."
+    }
+  ]
+}

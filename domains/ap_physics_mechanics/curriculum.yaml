@@ -1,0 +1,389 @@
+equation_sheet:
+  source: 2026 AP Physics C Mechanics reference (College Board)
+  policy: >
+    Anything on the sheet is available during the exam. Tutoring should not drill
+    memorization of given formulas; instead drill *when to reach for them*, *how to
+    set them up*, and *what they imply*. For not-given items, drill recall AND derivation
+    paths (the calculus identities are also given, so most can be re-derived).
+  given:
+    - constant-a kinematics (linear and rotational), integral forms Δx=∫v dt, Δv=∫a dt
+    - center-of-mass (discrete and continuous), v_cm, linear mass density λ
+    - a_sys = F_net/m_sys
+    - F_g = Gm₁m₂/r², U_G = -Gm₁m₂/r, ΔU_g = mgΔy
+    - friction inequality |F_f| ≤ μ|F_N|
+    - spring force F = -kΔx, spring PE U_s = ½k(Δx)²
+    - centripetal a_c = v²/r = rω²
+    - K = ½mv², W = ∫F·dr, ΔK = ΣW = ΣF_∥ d, ΔU = -∫F·dr, F_x = -dU/dx
+    - P_avg = W/Δt = ΔE/Δt, P_inst = dW/dt
+    - p = mv, F_net = dp/dt, J = ∫F dt = Δp
+    - τ = r×F, I = ∫r² dm, I_tot = Σm_i r_i², parallel axis I' = I_cm + Md²
+    - τ_net = Iα (system form), K_rot = ½Iω², W_rot = ∫τ dθ
+    - L = r×p = Iω, ΔL = ∫τ dt, Δx_cm = rΔθ
+    - T = 2π/ω = 1/f, T_s = 2π√(m/k), T_p = 2π√(L/g), T_phys = 2π√(I/(mgd))
+    - x(t) = x_max cos(ωt + φ)
+    - calculus identities and basic integrals (chain rule, d/dx of x^n, e^ax, ln, sin, cos; ∫x^n dx, ∫e^ax dx, ∫dx/(x+a), ∫sin/cos)
+    - vector dot and cross product magnitudes, common-angle trig values
+  not_given:
+    - specific moments of inertia (rod ML²/12 or ML²/3, disk ½MR², solid sphere ⅖MR², hoop MR²) — memorize or derive via I = ∫r² dm
+    - orbital results: v_circ = √(GM/r), v_esc = √(2GM/r), E_orbit = -GMm/(2r), Kepler T² ∝ a³, vis-viva
+    - drag forces F = -bv, F = -cv², terminal velocity setup
+    - spring combinations (series 1/k_eq = Σ1/k_i, parallel k_eq = Σk_i)
+    - rolling constraint v_cm = ωR, a_cm = αR
+    - ω = √(k/m) (derivable instantly from T_s but worth knowing)
+    - projectile shortcuts (range R = v₀² sin 2θ / g, time of flight, max height)
+    - small-angle approximation sin θ ≈ θ, cos θ ≈ 1 - θ²/2
+    - 1D elastic collision relative-velocity reversal: (v₁-v₂) → -(v₁-v₂)
+    - exponential solution to linear drag v(t) = v_term(1 - e^(-t/τ))
+
+concepts:
+  - slug: kinematics-1d
+    title: One-dimensional kinematics
+    knowledge_points:
+      - "x(t), v(t)=dx/dt, a(t)=dv/dt; integrals invert derivatives"
+      - "Constant-a kinematics: v=v0+at, x=x0+v0t+at^2/2, v^2=v0^2+2a*dx"
+      - "Position/velocity/acceleration graphs: slopes and areas relate them"
+    prereqs: []
+    estimated_hours: 1.0
+    target_refs: [{unit: 1}]
+
+  - slug: kinematics-2d-vectors
+    title: Vectors and 2D/3D kinematics
+    knowledge_points:
+      - "Vectors: components, magnitude, unit vectors; dot and cross products"
+      - "Independence of perpendicular components (projectile motion)"
+      - "Range, max height, time-of-flight for projectiles"
+    prereqs:
+      - slug: kinematics-1d
+        weight: 0.9
+        reason: 2D kinematics decomposes into independent 1D problems
+    estimated_hours: 1.0
+    target_refs: [{unit: 1}]
+    equation_sheet_note: "Range/time-of-flight/max-height shortcuts NOT given. Either memorize or re-derive each problem (cheap from given kinematics). Drill the derivation reflex."
+
+  - slug: relative-motion
+    title: Reference frames and relative motion
+    knowledge_points:
+      - "v_AB = v_AC + v_CB (Galilean velocity addition)"
+      - "Frames at constant velocity are inertial; physics looks the same"
+      - "Choosing the right frame can collapse a problem (e.g. center-of-mass frame)"
+    prereqs:
+      - slug: kinematics-2d-vectors
+        weight: 0.6
+        reason: Velocity addition is a vector operation
+    estimated_hours: 0.5
+    target_refs: [{unit: 1}]
+
+  - slug: center-of-mass
+    title: Center of mass and systems of particles
+    knowledge_points:
+      - "x_cm = sum(m_i x_i)/M; integral form for continuous distributions"
+      - "v_cm = p_total/M; a_cm = F_ext/M"
+      - "Internal forces don't move the CM; external forces do"
+    prereqs:
+      - slug: kinematics-2d-vectors
+        weight: 0.5
+        reason: CM is a weighted vector sum
+    estimated_hours: 0.5
+    target_refs: [{unit: 2}]
+
+  - slug: newtons-laws-fbd
+    title: Newton's laws and free-body diagrams
+    knowledge_points:
+      - "1st: no net force => constant velocity (inertial frames only)"
+      - "2nd: F_net = ma (component-wise); F_net = dp/dt is more general"
+      - "3rd: action-reaction pairs act on different bodies; equal magnitude, opposite direction"
+      - "FBD discipline: isolate the body, draw every force, choose axes that decouple"
+    prereqs:
+      - slug: kinematics-2d-vectors
+        weight: 0.7
+        reason: Force balance is vector arithmetic on the FBD
+    estimated_hours: 1.5
+    target_refs: [{unit: 2}]
+
+  - slug: gravity-and-orbits
+    title: Gravitational force and orbital motion
+    knowledge_points:
+      - "F = G m1 m2 / r^2; g = GM/r^2 at radius r"
+      - "U_g = -G m1 m2 / r (zero at infinity); E_total = -GMm/(2r) for circular orbit"
+      - "Kepler 3: T^2 ∝ a^3; vis-viva: v^2 = GM(2/r - 1/a)"
+      - "Orbital v_circ = sqrt(GM/r); escape v = sqrt(2GM/r)"
+    prereqs:
+      - slug: newtons-laws-fbd
+        weight: 0.7
+        reason: Orbital motion is gravity providing centripetal force
+      - slug: conservative-forces-pe
+        weight: 0.5
+        reason: Orbital energy uses gravitational PE
+    estimated_hours: 1.5
+    target_refs: [{unit: 2}, {unit: 6}]
+    equation_sheet_note: "Only F_g and U_G given. Must memorize or re-derive: v_circ=√(GM/r) (set F_g = mv²/r), v_esc=√(2GM/r) (energy conservation to ∞), E_orbit=-GMm/(2r), Kepler T²∝a³, vis-viva. Drill the derivation chains."
+
+  - slug: friction-and-resistive
+    title: Friction and velocity-dependent resistive forces
+    knowledge_points:
+      - "Static: f_s <= mu_s N; kinetic: f_k = mu_k N (opposes motion)"
+      - "Linear drag: F = -bv; quadratic drag: F = -cv^2"
+      - "Terminal velocity when drag balances driving force; v(t) approach exponential for linear drag"
+    prereqs:
+      - slug: newtons-laws-fbd
+        weight: 0.8
+        reason: Friction is just another force on the FBD
+    estimated_hours: 1.0
+    target_refs: [{unit: 2}]
+    equation_sheet_note: "Friction inequality given. Drag forms (F=-bv, F=-cv²) and v(t)=v_term(1-e^(-t/τ)) NOT given. Drill: setting up the ODE, recognizing terminal velocity (a=0), solving the linear case via separation of variables (the integral ∫dx/(x+a) is on the sheet)."
+
+  - slug: spring-force
+    title: Spring force (Hooke's law)
+    knowledge_points:
+      - "F = -kx (linear restoring); valid in elastic regime"
+      - "Springs in series: 1/k_eq = sum 1/k_i; parallel: k_eq = sum k_i"
+    prereqs:
+      - slug: newtons-laws-fbd
+        weight: 0.6
+        reason: Spring force is one entry on the FBD
+    estimated_hours: 0.5
+    target_refs: [{unit: 2}]
+    equation_sheet_note: "F=-kΔx given. Series/parallel combination rules NOT given — must derive (same-displacement vs same-force argument)."
+
+  - slug: circular-motion
+    title: Uniform and non-uniform circular motion
+    knowledge_points:
+      - "a_centripetal = v^2/r = omega^2 r, directed toward center"
+      - "Net radial force provides centripetal acceleration; tangential force changes |v|"
+      - "Banked curves, conical pendulum, vertical loops: identify what supplies F_centripetal"
+    prereqs:
+      - slug: newtons-laws-fbd
+        weight: 0.8
+        reason: Circular motion is F=ma applied to a curved trajectory
+    estimated_hours: 1.0
+    target_refs: [{unit: 2}]
+
+  - slug: work-energy-theorem
+    title: Work and the work-energy theorem
+    knowledge_points:
+      - "W = integral F · dr; for constant F: W = F·d cos(theta)"
+      - "KE = (1/2) m v^2; W_net = delta KE (work-energy theorem)"
+      - "Work done by a variable force = area under F-x curve"
+    prereqs:
+      - slug: newtons-laws-fbd
+        weight: 0.7
+        reason: Work integrates force over displacement
+    estimated_hours: 1.0
+    target_refs: [{unit: 3}]
+
+  - slug: conservative-forces-pe
+    title: Conservative forces, potential energy, and energy conservation
+    knowledge_points:
+      - "Conservative force <=> closed-loop work = 0 <=> F = -dU/dx"
+      - "Common PEs: gravity (mgh near surface, -GMm/r general), spring (kx^2/2)"
+      - "E_mech = KE + U; conserved when only conservative forces do work"
+      - "Non-conservative work => delta E_mech = W_nc (e.g. friction => heat)"
+    prereqs:
+      - slug: work-energy-theorem
+        weight: 0.9
+        reason: PE is defined via work done by conservative forces
+    estimated_hours: 1.5
+    target_refs: [{unit: 3}]
+
+  - slug: power
+    title: Power
+    knowledge_points:
+      - "P = dW/dt = F · v (instantaneous)"
+      - "Average power = W_total / t_total"
+    prereqs:
+      - slug: work-energy-theorem
+        weight: 0.7
+        reason: Power is the time derivative of work
+    estimated_hours: 0.3
+    target_refs: [{unit: 3}]
+
+  - slug: momentum-impulse
+    title: Linear momentum and impulse
+    knowledge_points:
+      - "p = mv; F_net = dp/dt"
+      - "Impulse J = integral F dt = delta p"
+      - "Impulse-momentum theorem: net impulse equals change in momentum"
+      - "F-t graph: area under curve is impulse"
+    prereqs:
+      - slug: newtons-laws-fbd
+        weight: 0.6
+        reason: F=dp/dt is the momentum form of Newton's 2nd law
+    estimated_hours: 0.7
+    target_refs: [{unit: 4}]
+
+  - slug: momentum-conservation
+    title: Conservation of linear momentum
+    knowledge_points:
+      - "Closed system (no external forces): p_total conserved"
+      - "Component-wise: p_x and p_y conserved independently if no external force in that direction"
+      - "Recoil, explosions: zero initial p => equal and opposite final p"
+    prereqs:
+      - slug: momentum-impulse
+        weight: 0.9
+        reason: Conservation follows from F_ext = 0 => dp/dt = 0
+    estimated_hours: 0.7
+    target_refs: [{unit: 4}]
+
+  - slug: collisions
+    title: Elastic and inelastic collisions
+    knowledge_points:
+      - "Elastic: KE conserved AND p conserved"
+      - "Perfectly inelastic: p conserved, max KE lost; bodies stick"
+      - "1D elastic: relative velocity reverses (v1-v2 -> -(v1-v2))"
+      - "2D collisions: solve p_x and p_y separately; KE if elastic"
+    prereqs:
+      - slug: momentum-conservation
+        weight: 0.9
+        reason: Collisions are momentum conservation problems
+      - slug: conservative-forces-pe
+        weight: 0.4
+        reason: Elastic case adds KE conservation
+    estimated_hours: 1.0
+    target_refs: [{unit: 4}]
+    equation_sheet_note: "p, J, K given. The 1D elastic relative-velocity-reversal trick (v₁-v₂)→-(v₁-v₂) NOT given but enormously time-saving. Drill recognition + derivation."
+
+  - slug: rotational-kinematics
+    title: Rotational kinematics and linear-rotational connection
+    knowledge_points:
+      - "theta, omega = d theta/dt, alpha = d omega/dt; constant-alpha equations parallel linear case"
+      - "v = omega r (tangential); a_t = alpha r; a_c = omega^2 r"
+      - "Right-hand rule for omega and alpha as vectors"
+    prereqs:
+      - slug: kinematics-1d
+        weight: 0.8
+        reason: Rotational equations parallel linear constant-a equations
+    estimated_hours: 1.0
+    target_refs: [{unit: 5}]
+
+  - slug: torque-and-inertia
+    title: Torque and rotational inertia
+    knowledge_points:
+      - "tau = r × F; magnitude = rF sin(theta); RHR for direction"
+      - "I = sum m_i r_i^2 (discrete); integral r^2 dm (continuous)"
+      - "Standard moments: rod (ML^2/12 about center, ML^2/3 about end), disk (MR^2/2), sphere (2MR^2/5), hoop (MR^2)"
+      - "Parallel-axis theorem: I = I_cm + Md^2"
+    prereqs:
+      - slug: newtons-laws-fbd
+        weight: 0.5
+        reason: Torque is the rotational analog of force
+    estimated_hours: 1.5
+    target_refs: [{unit: 5}]
+    equation_sheet_note: "I=∫r² dm and parallel axis given. Specific I values (rod ML²/12 or ML²/3, disk ½MR², solid sphere ⅖MR², hoop MR²) NOT given. Drill both: instant recall of the standard four AND the integral derivation for any of them (so an unfamiliar shape on the exam is tractable)."
+
+  - slug: rotational-dynamics
+    title: Rotational equilibrium and Newton's 2nd law for rotation
+    knowledge_points:
+      - "tau_net = I alpha (rotational F=ma)"
+      - "Equilibrium: sum tau = 0 AND sum F = 0 (about any pivot)"
+      - "Choice of pivot can eliminate unknowns (pick the joint where forces are unknown)"
+    prereqs:
+      - slug: torque-and-inertia
+        weight: 0.9
+        reason: Rotational F=ma uses I and tau
+    estimated_hours: 1.0
+    target_refs: [{unit: 5}]
+
+  - slug: rotational-energy
+    title: Rotational kinetic energy and work
+    knowledge_points:
+      - "KE_rot = (1/2) I omega^2"
+      - "W = integral tau d theta; P_rot = tau · omega"
+      - "Total KE for rolling = (1/2)Mv_cm^2 + (1/2)I_cm omega^2"
+    prereqs:
+      - slug: torque-and-inertia
+        weight: 0.7
+        reason: KE_rot uses I
+      - slug: work-energy-theorem
+        weight: 0.7
+        reason: Work-energy theorem extends to rotation
+    estimated_hours: 0.7
+    target_refs: [{unit: 6}]
+
+  - slug: angular-momentum
+    title: Angular momentum and its conservation
+    knowledge_points:
+      - "L = r × p (point); L = I omega (rigid body about fixed axis)"
+      - "tau_net = dL/dt; if tau_ext = 0, L conserved"
+      - "Classic problem: ice skater pulls in arms, I decreases, omega increases, L same"
+      - "Angular impulse = integral tau dt = delta L"
+    prereqs:
+      - slug: rotational-dynamics
+        weight: 0.7
+        reason: L conservation parallels p conservation
+      - slug: momentum-conservation
+        weight: 0.5
+        reason: "Same conceptual move: zero net effect => conserved"
+    estimated_hours: 1.0
+    target_refs: [{unit: 6}]
+
+  - slug: rolling-without-slipping
+    title: Rolling motion
+    knowledge_points:
+      - "Rolling without slipping: v_cm = omega R, a_cm = alpha R"
+      - "Contact point is instantaneously at rest"
+      - "Energy split: KE_total = (1/2)Mv^2 + (1/2)I omega^2; for rolling, second term = (1/2)(I/R^2) v^2"
+      - "Object with smaller I/MR^2 wins a downhill race (sphere beats hoop)"
+    prereqs:
+      - slug: rotational-energy
+        weight: 0.8
+        reason: Rolling problems usually solved via energy conservation
+      - slug: angular-momentum
+        weight: 0.4
+        reason: Rolling involves angular and linear momentum together
+    estimated_hours: 0.7
+    target_refs: [{unit: 6}]
+    equation_sheet_note: "Rolling constraint v_cm=ωR, a_cm=αR NOT given. KE_total = ½Mv² + ½Iω² has both pieces given but the *combination* and the I/(MR²) trick (sphere beats hoop) are on you."
+
+  - slug: shm-basics
+    title: "Simple harmonic motion: definition and analysis"
+    knowledge_points:
+      - "Defining feature: F = -kx (restoring force linear in displacement) => x(t) = A cos(omega t + phi)"
+      - "omega = sqrt(k/m); T = 2pi sqrt(m/k); f = 1/T"
+      - "x, v, a are sinusoidal and 90 degrees out of phase: v leads x by pi/2, a leads v by pi/2"
+      - "Initial conditions determine A and phi"
+    prereqs:
+      - slug: spring-force
+        weight: 0.7
+        reason: Mass-spring is the canonical SHM system
+      - slug: newtons-laws-fbd
+        weight: 0.6
+        reason: SHM follows from F=ma with linear restoring force
+    estimated_hours: 1.5
+    target_refs: [{unit: 7}]
+    equation_sheet_note: "x(t)=x_max cos(ωt+φ) and T_s=2π√(m/k) given. ω=√(k/m) NOT explicitly given (derivable from T_s in 5 seconds). Drill: deriving ω from F=-kx → ẍ=-(k/m)x, recognizing ω in any restoring-force ODE."
+
+  - slug: shm-energy
+    title: Energy in simple harmonic motion
+    knowledge_points:
+      - "E_total = (1/2)kA^2 (constant)"
+      - "KE max at x=0; PE max at x=±A; oscillates between them"
+      - "<KE> = <PE> = E_total/2 over a full period"
+    prereqs:
+      - slug: shm-basics
+        weight: 0.9
+        reason: Need x(t) and v(t) to compute KE and PE
+      - slug: conservative-forces-pe
+        weight: 0.5
+        reason: Spring PE = kx^2/2 is conservative
+    estimated_hours: 0.5
+    target_refs: [{unit: 7}]
+
+  - slug: pendulums
+    title: Simple and physical pendulums
+    knowledge_points:
+      - "Simple pendulum (small angle): T = 2pi sqrt(L/g)"
+      - "Physical pendulum: T = 2pi sqrt(I/(mgd)) where d is distance from pivot to CM"
+      - "Small-angle approximation: sin(theta) ≈ theta; breaks down beyond ~15 degrees"
+    prereqs:
+      - slug: shm-basics
+        weight: 0.8
+        reason: Pendulums are SHM in the small-angle limit
+      - slug: torque-and-inertia
+        weight: 0.5
+        reason: Physical pendulum uses I about the pivot
+    estimated_hours: 0.5
+    target_refs: [{unit: 7}]
+    equation_sheet_note: "T_p=2π√(L/g) and T_phys=2π√(I/(mgd)) both given. Small-angle approximation sin θ ≈ θ NOT given — must remember it's the *reason* pendulums are SHM at all (and breaks down beyond ~15°)."
+
+generated_by: claude-opus-4-7
+generated_at: 2026-05-04

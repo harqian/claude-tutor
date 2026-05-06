@@ -1,0 +1,13 @@
+{
+  "extraKnownMarketplaces": {
+    "ai_tutor-local": {
+      "source": {
+        "source": "file",
+        "path": "../.claude-plugin/marketplace.json"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "ai_tutor@ai_tutor-local": true
+  }
+}

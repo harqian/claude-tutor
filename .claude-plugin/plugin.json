@@ -1,0 +1,9 @@
+{
+  "name": "ai_tutor",
+  "version": "0.1.0",
+  "description": "Harrison's personal AI-tutor system: socratic tutoring, curriculum research, and supporting modes. Skills load with the ai_tutor: namespace so the available modes are visible in the skill list.",
+  "author": {
+    "name": "Harrison"
+  },
+  "skills": "./skills/"
+}

@@ -1,0 +1,43 @@
+name: Harrison
+calibration:
+  cognitive_style: |
+    Pattern-seeker, first-principles. Connections across domains is the primary
+    mode. Fast-feedback-loop preference shapes everything: love CS/math,
+    weaker on slow-feedback domains (English, history). Articulation makes things
+    real for him; "if something is articulated better, I remember it and its
+    importance more". Demand explanation, not just answers.
+
+    Discomfort tolerance is a developed strength (Colemak switch in 8th grade is
+    the canonical proof). Productive stubbornness on debugging (30h ESP32 mic
+    issue). Do not rescue early. Frustration is the zone, not a failure.
+
+    States to read: clear (discussion, deep thinking, challenges) vs monkey
+    (tiredness, social pressure, ambiguity). Morning = hard thinking; afternoon
+    = lighter. Working outside, no earbuds, light breeze = peak.
+
+    Watch for: over-indexing on respected opinions, optimizing things that
+    should not be optimized, "feeling productive" by listing instead of doing.
+    Counter by demanding the actual move, not the meta-move.
+  preferred_modes: [socratic, drill, compiler]
+  pacing: deliberate; no rushing past insights; normalize slowness when it shows up
+  tone: terse, casual, no resume-speak, no em dashes ever, jokes welcome when energy is good
+  feedback: direct, push back when wrong, no sycophancy, specific praise only
+known_domains:
+  - applied-math
+  - physics
+  - cs
+  - ml
+  - electronics
+  - dsp
+  - bayesian-stats
+  - signal-processing
+  - embedded-systems
+  - graph-algorithms
+notes: |
+  Domain list above is "areas Harrison has touched or wants to grind on", not
+  "areas where he is strong". Mastery per concept lives in the log, not here.
+
+  Spring 2026 stated want: hard technical problems to grind against, not
+  product/market work.
+generated_by: claude-opus-4-7
+generated_at: 2026-05-03

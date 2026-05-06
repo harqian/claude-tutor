@@ -1,0 +1,64 @@
+domain: ap_physics_em
+last_updated: 2026-05-03T00:00:00Z
+
+summary: |
+  First real session on conductors-equilibrium. Rebuilt the E=0 argument from scratch
+  via equilibrium (not Gauss). Key correction: Gauss proves q_enc=0 from E=0, not the
+  reverse. Extended to surface: E perpendicular (not zero) because tangential component
+  would cause charge to slide. V=constant derived from E=0 via line integral. All three
+  corollaries now solid.
+
+concepts:
+  - slug: coulomb-gauss
+    state: unseen
+    notes:
+  - slug: electric-potential
+    state: unseen
+    notes:
+  - slug: conductors-equilibrium
+    state: solid
+    notes: rebuilt from equilibrium argument; Gauss direction corrected; surface E direction derived
+  - slug: capacitors-dielectrics
+    state: shaky
+    notes: flagged weak in diagnostic; not yet touched
+  - slug: dc-circuits
+    state: unseen
+    notes:
+  - slug: rc-circuits
+    state: shaky
+    notes: energy vs charge confusion flagged in diagnostic; not yet touched
+  - slug: magnetic-force
+    state: unseen
+    notes:
+  - slug: biot-savart-ampere
+    state: unseen
+    notes:
+  - slug: faraday-lenz
+    state: shaky
+    notes: field direction errors flagged in diagnostic; not yet touched
+  - slug: inductors-rl-lc
+    state: solid
+    notes: strong in diagnostic; no session work needed yet
+
+log:
+  - ts: 2026-05-03T00:00:00Z
+    mode: socratic
+    concept: conductors-equilibrium
+    note: "rebuilt E=0 argument from equilibrium, not Gauss. caught Gauss direction error himself via external-charge counterexample. extended to surface E perpendicular. 4 mochi cards created."
+    mochi_cards:
+      - id: UuCpRgvU
+        deck: ap e&m
+        front: "Why is E = 0 inside a conductor in equilibrium?"
+        back: "Free charges would feel F = qE and accelerate if E ≠ 0. Equilibrium means nothing moves, so E must be zero at every interior point. Applies to strict interior only - not the surface. No Gauss needed; it follows directly from the definition of equilibrium."
+      - id: fe0WqF5C
+        deck: ap e&m
+        front: "Why does all charge in a conductor sit on the surface?"
+        back: "E = 0 inside (from equilibrium) → Gauss's law on any interior surface gives flux = 0 → q_enc = 0 → no net charge in the interior. Logic runs: equilibrium → E=0 → (Gauss) → charge on surface. Not the reverse."
+      - id: hMPpoNmf
+        deck: ap e&m
+        front: "Why is V constant throughout a conductor in equilibrium?"
+        back: "V = -∫E dr. E = 0 everywhere inside, so the integral is zero between any two interior points. ΔV = 0 means V is the same everywhere - not necessarily zero, just flat. Same value inside and on the surface."
+      - id: 4r4abHVi
+        deck: ap e&m
+        front: "What direction is E at the surface of a conductor, and why?"
+        back: "Perpendicular to the surface (no tangential component). If there were a tangential component, surface charges would slide along the surface - not equilibrium. Works for any shape, not just spheres."

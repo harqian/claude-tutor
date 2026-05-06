@@ -1,0 +1,393 @@
+equation_sheet:
+  source: 2026 AP Statistics Exam Reference Information (College Board)
+  policy: >
+    AP Stats inverts the physics pattern. Almost every *formula* is given (means,
+    SDs, sampling distributions for proportions/means/slope, chi-square statistic,
+    standardized-statistic and CI templates, binomial/geometric pmfs, full z-table,
+    t-table, chi-square table). What's NOT given is the conceptual machinery:
+    when to use which procedure, what the conditions are, what df to use, how to
+    interpret p-values and CIs, hypothesis-structure, scope-of-inference rules.
+    Drill those, not the algebra.
+  given:
+    # Descriptive
+    - x̄ = Σx_i/n, s_x = √(Σ(x_i-x̄)²/(n-1))
+    - LSRL form ŷ = a + bx, ȳ = a + bx̄, slope b = r·(s_y/s_x)
+    - r = (1/(n-1))·Σ((x_i-x̄)/s_x)((y_i-ȳ)/s_y)
+    # Probability
+    - P(A∪B) = P(A) + P(B) - P(A∩B); P(A|B) = P(A∩B)/P(B)
+    - Discrete RV: μ_X = Σx_i P(x_i), σ_X = √(Σ(x_i-μ_X)² P(x_i))
+    - Binomial: μ=np, σ=√(np(1-p)), P(X=x)=C(n,x)p^x(1-p)^(n-x)
+    - Geometric: μ=1/p, σ=√(1-p)/p, P(X=x)=(1-p)^(x-1) p
+    # Inference templates
+    - Standardized statistic: (statistic - parameter)/SE
+    - CI: statistic ± (critical value)·SE
+    - Chi-square statistic: χ² = Σ (O-E)²/E
+    # Sampling distributions: proportions
+    - 1-prop: μ_p̂=p, σ_p̂=√(p(1-p)/n), s_p̂=√(p̂(1-p̂)/n)
+    - 2-prop unpooled: σ=√(p1(1-p1)/n1 + p2(1-p2)/n2), s=√(p̂1(1-p̂1)/n1 + p̂2(1-p̂2)/n2)
+    - 2-prop pooled (when p1=p2 assumed, i.e. for tests): s=√(p̂_c(1-p̂_c)(1/n1+1/n2)), p̂_c=(X1+X2)/(n1+n2)
+    # Sampling distributions: means
+    - 1-pop: μ_X̄=μ, σ_X̄=σ/√n, s_X̄=s/√n
+    - 2-pop: σ=√(σ1²/n1 + σ2²/n2), s=√(s1²/n1 + s2²/n2)
+    # Sampling distribution: slope
+    - σ_b = σ/(σ_x √n), s_b = s/(s_x √(n-1))
+    - "where s = √(Σ(y_i-ŷ_i)²/(n-2)) (NOTE: the n-2 is hidden inside s)"
+    # Tables
+    - Table A standard normal (z) probabilities, full coverage
+    - Table B t critical values, df 1-30, 40, 50, 60, 80, 100, 1000, ∞ × 12 tail probabilities
+    - Table C chi-square critical values, df 1-30, 40, 50, 60, 80, 100 × 12 tail probabilities
+  not_given:
+    # Procedure selection (the entire conceptual ask of the exam)
+    - which test to run for a given scenario (1-prop z, 2-prop z, 1-sample t, 2-sample t, paired t, chi-square GOF/independence/homogeneity, slope t)
+    - when to pool p̂ for 2-prop (test yes, CI no) and why (H0: p1=p2 assumes common p)
+    - when to use z vs t (z for proportions, t for means/slope)
+    # Degrees of freedom (formula sheet doesn't list df rules)
+    - 1-sample/paired t df = n-1
+    - 2-sample t df = software/calculator (Welch); conservative hand approximation = min(n1-1, n2-1)
+    - chi-square GOF df = k-1 (k categories)
+    - chi-square independence/homogeneity df = (r-1)(c-1)
+    - slope inference df = n-2 (because regression estimates 2 parameters, a and b)
+    # Conditions for inference (entirely off-sheet, conceptual)
+    - Random (random sample or random assignment)
+    - 10% (independence approximation when sampling without replacement: n ≤ 0.10·N)
+    - Large Counts for proportions (np ≥ 10 AND n(1-p) ≥ 10; use p0 for HT, p̂ for CI; pooled p̂_c for 2-prop HT)
+    - Normal/CLT for means (population normal, OR n ≥ 30 by CLT, OR sample looks roughly symmetric without strong skew/outliers)
+    - LINER for slope (Linear pattern, Independent obs, Normal residuals, Equal variance, Random sample)
+    # Hypothesis structure
+    - H0 always asserts equality / no effect / status quo (e.g. p=p0, μ=μ0, β=0, p1=p2)
+    - Ha is what you're trying to find evidence for (one- or two-sided)
+    - α (significance level) chosen before seeing data; reject H0 if p-value < α
+    # Interpretation rubrics (AP rubric-correct phrasing, not on sheet)
+    - CI interpretation - "we are C% confident the true [parameter in context] is between (a,b)"; NOT "C% chance"
+    - confidence-level interpretation - "in repeated samples, C% of constructed intervals capture [parameter]"
+    - p-value interpretation - "probability of observing a sample statistic this extreme or more extreme, assuming H0 is true"
+    - HT conclusion in context - reference H0, α, parameter; "evidence to reject H0 that [parameter claim], in favor of Ha that [alt claim]"
+    # Type I/II/power
+    - Type I = reject true H0 (P = α)
+    - Type II = fail to reject false H0 (P = β)
+    - Power = 1 - β = P(reject H0 | Ha true); increases with larger n, larger effect, larger α, less variability
+    # Random variables (rules, not formulas, are the hard part)
+    - E(aX+b) = aE(X)+b; Var(aX+b) = a²Var(X)
+    - E(X+Y) = E(X)+E(Y) always; Var(X±Y) = Var(X)+Var(Y) only if X,Y independent (always +, never -, even for X-Y)
+    - mutually exclusive ≠ independent (usually opposite)
+    # Descriptive interpretation
+    - r² = fraction of variation in y explained by linear regression on x
+    - empirical rule (68-95-99.7) for normal
+    - outlier rule (x < Q1-1.5·IQR or x > Q3+1.5·IQR)
+    - linear transformation effects (mean shifts and scales; sd only scales by |a|; shape unchanged)
+    # Design / scope (entire Unit 3 is conceptual)
+    - sampling methods (SRS, stratified, cluster, systematic, convenience) and their bias profiles
+    - experimental design principles (control, randomization, replication, blocking, blinding)
+    - random sampling unlocks generalization; random assignment unlocks causation; 2x2 of conclusions
+
+concepts:
+  - slug: univariate-graphical
+    title: Graphical displays of one-variable data
+    knowledge_points:
+      - "Categorical: bar chart, pie chart; quantitative: dotplot, stemplot, histogram, boxplot"
+      - "Distribution shape: symmetric, skewed left/right, unimodal/bimodal/uniform; outliers"
+      - "Choose graph by variable type and what you want to see"
+    prereqs: []
+    estimated_hours: 1.0
+    target_refs: [{unit: 1}]
+
+  - slug: univariate-numerical
+    title: Numerical summaries and the normal model
+    knowledge_points:
+      - "Center: mean (sensitive to outliers), median (resistant). Spread: sd (sensitive), IQR (resistant), range"
+      - "z = (x - mean)/sd; standardization makes scores comparable across distributions"
+      - "Empirical rule (68-95-99.7) for normal; percentile/quantile via normal table or calculator"
+      - "Outlier rule: x < Q1 - 1.5*IQR or x > Q3 + 1.5*IQR"
+      - "Linear transformation X -> aX+b: mean -> a*mean+b, sd -> |a|*sd, shape unchanged"
+    prereqs:
+      - slug: univariate-graphical
+        weight: 0.6
+        reason: Numerical summaries describe what graphs show
+    estimated_hours: 1.5
+    target_refs: [{unit: 1}]
+    equation_sheet_note: "x̄ and s formulas given. Empirical rule, 1.5·IQR outlier rule, linear-transformation rules NOT given (must memorize). Table A (z-table) given for any percentile lookup."
+
+  - slug: bivariate-categorical
+    title: Two-variable categorical data
+    knowledge_points:
+      - "Two-way tables; marginal, joint, conditional distributions"
+      - "Comparing conditional distributions reveals association between variables"
+      - "Segmented bar charts and mosaic plots visualize conditional distributions"
+    prereqs: []
+    estimated_hours: 0.5
+    target_refs: [{unit: 2}]
+
+  - slug: bivariate-quantitative
+    title: Scatterplots, correlation, and least-squares regression
+    knowledge_points:
+      - "Scatterplot: direction, form, strength, outliers/influential points"
+      - "r in [-1,1]; measures linear association strength only; unitless; symmetric in x,y"
+      - "LSRL: y_hat = a + bx; b = r*(s_y/s_x); passes through (x_bar, y_bar)"
+      - "Residual = y - y_hat; residual plot should show no pattern if model fits"
+      - "r^2 = fraction of variation in y explained by linear regression on x"
+      - "Transformations (log, sqrt) can linearize curved data"
+    prereqs:
+      - slug: univariate-numerical
+        weight: 0.7
+        reason: Regression uses means and sds of x, y
+    estimated_hours: 2.0
+    target_refs: [{unit: 2}]
+    equation_sheet_note: "ŷ=a+bx, b=r·(s_y/s_x), and r given. r² interpretation (fraction of variation explained), residual-plot reading, transformation choice NOT given. Drill: reading regression output (Minitab/JMP-style printouts) since AP problems present pre-computed output."
+
+  - slug: sampling-methods
+    title: Sampling methods and sources of bias
+    knowledge_points:
+      - "SRS, stratified, cluster, systematic, convenience samples"
+      - "Sampling bias: undercoverage, voluntary response, nonresponse, response bias, wording effects"
+      - "Random sampling enables generalization to the population"
+      - "Census vs sample; why we sample (cost, time, destructive testing)"
+    prereqs: []
+    estimated_hours: 1.0
+    target_refs: [{unit: 3}]
+    equation_sheet_note: "Entirely conceptual. Nothing on the sheet. Drill: identifying the sampling method from a vignette, naming bias sources by type, and articulating what random sampling does (generalize) vs doesn't (no causation)."
+
+  - slug: experimental-design
+    title: Experimental design
+    knowledge_points:
+      - "Three principles: control (lurking variables), randomization (assignment), replication"
+      - "Completely randomized, randomized block, matched-pairs designs"
+      - "Blinding: single-blind, double-blind; placebo effect"
+      - "Random *assignment* enables causal inference; random *sampling* enables generalization. Different concepts."
+      - "Confounding vs lurking variables: confounders are tangled with the treatment"
+    prereqs:
+      - slug: sampling-methods
+        weight: 0.4
+        reason: Both depend on the role of randomness, but distinct concepts
+    estimated_hours: 1.5
+    target_refs: [{unit: 3}]
+    equation_sheet_note: "Entirely conceptual. Nothing on the sheet. Drill the random-sampling-vs-random-assignment 2×2 (causation+generalization, the FRQ-every-year topic). Drill identifying CRD vs RBD vs matched-pairs designs from vignettes."
+
+  - slug: probability-rules
+    title: Probability rules
+    knowledge_points:
+      - "P(A or B) = P(A) + P(B) - P(A and B); mutually exclusive => P(A and B) = 0"
+      - "Conditional: P(B|A) = P(A and B) / P(A)"
+      - "Independence: P(B|A) = P(B) <=> P(A and B) = P(A)P(B)"
+      - "Mutually exclusive and independent are NOT the same; usually opposite"
+      - "Tree diagrams and two-way tables for conditional reasoning"
+    prereqs: []
+    estimated_hours: 1.5
+    target_refs: [{unit: 4}]
+
+  - slug: random-variables
+    title: Random variables and their distributions
+    knowledge_points:
+      - "Discrete RV: list of outcomes with probabilities summing to 1"
+      - "E(X) = sum x*P(x); Var(X) = sum (x - mu)^2 P(x)"
+      - "Linear: E(aX+b) = a*E(X)+b; Var(aX+b) = a^2 Var(X)"
+      - "Sums: E(X+Y) = E(X)+E(Y) always; Var(X+Y) = Var(X)+Var(Y) only if independent"
+      - "Var(X-Y) = Var(X)+Var(Y) for independent X, Y (still added, not subtracted)"
+    prereqs:
+      - slug: probability-rules
+        weight: 0.7
+        reason: RVs are formalized probability outcomes
+      - slug: univariate-numerical
+        weight: 0.4
+        reason: E and Var generalize sample mean and variance
+    estimated_hours: 1.5
+    target_refs: [{unit: 4}]
+    equation_sheet_note: "μ_X and σ_X formulas given for discrete RVs. Linear transformation rules (E(aX+b), Var(aX+b)) and combination rules (E(X+Y) always additive; Var(X±Y)=Var(X)+Var(Y) only if independent, ALWAYS plus even for X-Y) NOT given. These are the most-tested rules in Unit 4. Drill them."
+
+  - slug: binomial-geometric
+    title: Binomial and geometric distributions
+    knowledge_points:
+      - "Binomial conditions (BINS): Binary, Independent, fixed Number of trials, same Success probability"
+      - "P(X=k) = C(n,k) p^k (1-p)^(n-k); mu = np; sigma = sqrt(np(1-p))"
+      - "Geometric: trials until first success; P(X=k) = (1-p)^(k-1) p; mu = 1/p"
+      - "10% rule: independence approx OK if sample < 10% of population"
+    prereqs:
+      - slug: random-variables
+        weight: 0.9
+        reason: Binomial and geometric are specific RVs
+    estimated_hours: 1.0
+    target_refs: [{unit: 4}]
+    equation_sheet_note: "Both pmfs, μ, σ all given for binomial and geometric. BINS conditions and the 10% rule NOT given. Drill condition-checking and recognizing which distribution applies (fixed n + same p → binomial; trials until first success → geometric)."
+
+  - slug: sampling-dist-proportion
+    title: Sampling distribution of a sample proportion
+    knowledge_points:
+      - "p_hat = X/n; mean of p_hat = p; sd = sqrt(p(1-p)/n)"
+      - "Approximately normal when np >= 10 AND n(1-p) >= 10 (Large Counts)"
+      - "Sampling distribution describes variation in p_hat across hypothetical repeated samples"
+      - "Bias = mean of sampling dist - true parameter; variability = spread of sampling dist"
+    prereqs:
+      - slug: binomial-geometric
+        weight: 0.7
+        reason: p_hat is a scaled binomial RV
+    estimated_hours: 1.0
+    target_refs: [{unit: 5}]
+    equation_sheet_note: "μ_p̂, σ_p̂, s_p̂ all given. Large Counts threshold (≥10), bias-vs-variability framing, sampling-distribution-vs-population-distribution distinction NOT given. Drill: when SE shrinks, what changes (1/√n scaling), and why p̂ is approximately normal."
+
+  - slug: sampling-dist-mean
+    title: Sampling distribution of a sample mean (CLT)
+    knowledge_points:
+      - "x_bar mean = mu; sd = sigma/sqrt(n)"
+      - "If population normal: x_bar exactly normal for any n. Otherwise CLT: approximately normal for n >= 30"
+      - "10% condition for independence; sigma_x_bar shrinks as 1/sqrt(n) (not 1/n)"
+    prereqs:
+      - slug: random-variables
+        weight: 0.6
+        reason: x_bar is the average of n iid RVs
+      - slug: univariate-numerical
+        weight: 0.4
+        reason: Builds on mean and sd
+    estimated_hours: 1.0
+    target_refs: [{unit: 5}]
+    equation_sheet_note: "μ_X̄, σ_X̄ (with σ), s_X̄ (with s) all given. CLT threshold (n ≥ 30) and the if-pop-normal-then-X̄-exactly-normal-for-any-n rule NOT given. Drill: deciding when CLT applies vs when you need population normality."
+
+  - slug: ci-proportion
+    title: Confidence interval for a proportion
+    knowledge_points:
+      - "Form: estimate ± (critical value)(SE); for 1-prop z: p_hat ± z* sqrt(p_hat(1-p_hat)/n)"
+      - "Conditions: random sample, 10% (independence), Large Counts (np_hat >= 10, n(1-p_hat) >= 10)"
+      - "Interpretation: 'We are C% confident the true p is in (a, b)'. NOT 'C% chance p is in (a, b)'"
+      - "Confidence level interpretation: in repeated sampling, C% of intervals capture p"
+      - "Margin of error = z* SE; halving requires 4x sample size"
+    prereqs:
+      - slug: sampling-dist-proportion
+        weight: 0.9
+        reason: CI built from sampling distribution
+    estimated_hours: 1.5
+    target_refs: [{unit: 6}]
+    equation_sheet_note: "CI template (statistic ± critical·SE) and SE formula s_p̂ given. Conditions (Random/10%/Large Counts), AP rubric-correct interpretation phrasing, confidence-level interpretation NOT given. Drill the phrasing — wrong wording loses FRQ points even with correct math."
+
+  - slug: ht-proportion
+    title: Hypothesis test for a proportion
+    knowledge_points:
+      - "H0: p = p0 vs Ha: p <, >, or != p0"
+      - "Test statistic z = (p_hat - p0) / sqrt(p0(1-p0)/n) -- uses p0, not p_hat, in SE"
+      - "p-value: probability of observed (or more extreme) if H0 true"
+      - "Reject H0 if p-value < alpha; conclusion in context"
+      - "Type I error = reject true H0 (probability alpha); Type II = fail to reject false H0 (probability beta)"
+      - "Power = 1 - beta = P(reject H0 | Ha true); increases with larger n, larger effect size, larger alpha"
+      - "Confidence interval and two-sided test at alpha = 1-C agree on reject/fail-to-reject"
+    prereqs:
+      - slug: ci-proportion
+        weight: 0.7
+        reason: CI and HT share sampling distribution machinery
+    estimated_hours: 2.0
+    target_refs: [{unit: 6}]
+    equation_sheet_note: "Standardized statistic template given. Test uses p0 in SE (NOT p̂; this is on the sheet but easy to miss). H0/Ha structure, α/Type I/II/power relationships, p-value interpretation, conclusion phrasing all NOT given. Drill: writing the hypotheses, checking conditions with p0, and producing rubric-correct conclusions."
+
+  - slug: two-prop-inference
+    title: Two-proportion inference
+    knowledge_points:
+      - "CI: (p1_hat - p2_hat) ± z* sqrt(p1_hat(1-p1_hat)/n1 + p2_hat(1-p2_hat)/n2)"
+      - "HT for p1=p2: pool p_hat = (X1+X2)/(n1+n2); use pooled p in SE"
+      - "Conditions: two independent random samples, 10% each, Large Counts both"
+      - "If CI for p1 - p2 contains 0, no significant difference at corresponding alpha"
+    prereqs:
+      - slug: ht-proportion
+        weight: 0.9
+        reason: Direct extension to two samples
+    estimated_hours: 1.0
+    target_refs: [{unit: 6}]
+    equation_sheet_note: "BOTH unpooled (CI) and pooled (test) SE formulas given on the sheet, including the pooled p̂_c definition. The rule for *which to use when* is NOT given (test → pooled, CI → unpooled, because H0: p1=p2 forces pooling). Same pooled-vs-unpooled choice applies to the Large Counts check."
+
+  - slug: ci-mean
+    title: Confidence interval for a mean (t-interval)
+    knowledge_points:
+      - "x_bar ± t* (s/sqrt(n)); df = n - 1"
+      - "t distribution: bell-shaped, symmetric, heavier tails than normal; approaches normal as df grows"
+      - "Conditions: random sample, 10% (independence), normality (n>=30 by CLT, or sample looks roughly symmetric without strong skew/outliers)"
+      - "Interpretation parallels proportion CI; level still about repeated sampling"
+    prereqs:
+      - slug: sampling-dist-mean
+        weight: 0.9
+        reason: t-interval built on sampling distribution of x_bar with unknown sigma
+    estimated_hours: 1.0
+    target_refs: [{unit: 7}]
+    equation_sheet_note: "s_X̄ = s/√n given. df = n-1 for one-sample t NOT given (must memorize). Table B (t critical values) given; use it to look up t* for any df and confidence level. Conditions and phrasing same drill-target as ci-proportion."
+
+  - slug: ht-mean
+    title: One-sample and paired t-tests
+    knowledge_points:
+      - "One-sample t: t = (x_bar - mu0)/(s/sqrt(n)); df = n-1"
+      - "Paired t: compute differences, then one-sample t on differences. df = n_pairs - 1"
+      - "Pairing reduces variability when units are matched (before/after, twins, etc)"
+      - "Same conditions as t-interval"
+    prereqs:
+      - slug: ci-mean
+        weight: 0.8
+        reason: t-test reuses t-interval machinery
+      - slug: ht-proportion
+        weight: 0.6
+        reason: HT framework parallels proportion case
+    estimated_hours: 1.5
+    target_refs: [{unit: 7}]
+    equation_sheet_note: "Standardized statistic and s_X̄ given. df = n-1 NOT given. The big diagnostic skill (paired vs independent design identification) NOT given — and that's where strong students lose points. Drill the shuffle-test."
+
+  - slug: two-sample-mean
+    title: Two-sample t-procedures (independent samples)
+    knowledge_points:
+      - "CI: (x1_bar - x2_bar) ± t* sqrt(s1^2/n1 + s2^2/n2); HT: t = (x1_bar - x2_bar - 0)/SE"
+      - "df: use calculator/software (Welch); approx min(n1-1, n2-1) for hand work"
+      - "Independent samples (NOT paired); each sample's conditions checked separately"
+      - "Two-sample (independent) vs paired (matched): identifying which design is the trickier skill"
+    prereqs:
+      - slug: ht-mean
+        weight: 0.9
+        reason: Extension of one-sample t to two independent samples
+    estimated_hours: 1.0
+    target_refs: [{unit: 7}]
+    equation_sheet_note: "s for X̄1-X̄2 given as √(s1²/n1 + s2²/n2). Welch df NOT given (use calculator output, or hand-approximate as min(n1-1, n2-1) which is conservative and AP-acceptable). Drill: identifying independent-vs-paired design from the vignette before picking the procedure."
+
+  - slug: chi-square-gof
+    title: Chi-square goodness-of-fit test
+    knowledge_points:
+      - "H0: distribution matches a claimed model (specify p_i for each category)"
+      - "Expected count_i = n * p_i; chi^2 = sum (O - E)^2 / E"
+      - "df = (number of categories) - 1"
+      - "Conditions: random sample, all expected counts >= 5"
+    prereqs:
+      - slug: ht-proportion
+        weight: 0.5
+        reason: Categorical inference, just multi-category
+    estimated_hours: 1.0
+    target_refs: [{unit: 8}]
+    equation_sheet_note: "χ² = Σ(O-E)²/E given. df = k-1, expected count formula (n·p_i), Large Counts threshold (all expected ≥ 5) NOT given. Table C (chi-square critical values) given for any df. Drill: deciding GOF vs independence vs homogeneity (the test-selection trap)."
+
+  - slug: chi-square-independence
+    title: Chi-square test for independence/homogeneity
+    knowledge_points:
+      - "Two-way table; expected = (row total * col total) / grand total"
+      - "chi^2 = sum (O-E)^2/E; df = (r-1)(c-1)"
+      - "Independence (one sample, two variables) vs homogeneity (multiple samples, one variable): same arithmetic, different scope of conclusion"
+      - "Conditions: random sample(s), all expected counts >= 5"
+    prereqs:
+      - slug: chi-square-gof
+        weight: 0.9
+        reason: Same chi^2 statistic, different df and structure
+      - slug: bivariate-categorical
+        weight: 0.5
+        reason: Operates on two-way tables
+    estimated_hours: 1.0
+    target_refs: [{unit: 8}]
+    equation_sheet_note: "χ² statistic given. Expected = (row total · col total) / grand total NOT given. df = (r-1)(c-1) NOT given. Independence (one sample, two variables) vs Homogeneity (multiple samples, one variable): same arithmetic, different scope of conclusion — the distinction is NOT on the sheet, drill it."
+
+  - slug: inference-slope
+    title: Inference for the slope of a regression line
+    knowledge_points:
+      - "Model: y = alpha + beta*x + epsilon; epsilon ~ Normal(0, sigma) iid"
+      - "CI for beta: b ± t* SE_b; df = n - 2"
+      - "HT: H0: beta = 0 (no linear relationship); t = b/SE_b"
+      - "Conditions (LINER): Linear pattern, Independent obs, Normal residuals, Equal variance, Random sample"
+      - "Read SE_b, t, df, p-value off computer output (Minitab/JMP-style); don't compute by hand"
+    prereqs:
+      - slug: bivariate-quantitative
+        weight: 0.9
+        reason: Inference is about LSRL parameters
+      - slug: ht-mean
+        weight: 0.6
+        reason: t-procedure structure
+    estimated_hours: 1.5
+    target_refs: [{unit: 9}]
+    equation_sheet_note: "s_b = s/(s_x √(n-1)) given, with s = √(Σ(y-ŷ)²/(n-2)) — the n-2 is HIDDEN inside s. df = n-2 (NOT n-1, even though √(n-1) appears in s_b denominator) NOT explicitly given. LINER conditions NOT given. AP problems give regression output; drill reading SE_b, t, df, p-value off Minitab/JMP-style printouts rather than computing by hand."
+
+generated_by: claude-opus-4-7
+generated_at: 2026-05-03

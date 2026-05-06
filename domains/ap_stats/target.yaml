@@ -1,0 +1,70 @@
+target_type: ap_exam
+target_id: AP-STATS
+deadline: 2026-05-13
+mastery_threshold: 0.80
+weighting:
+  - id: 1
+    title: Exploring One-Variable Data
+    weight: 0.18
+    concepts:
+      - univariate-graphical
+      - univariate-numerical
+  - id: 2
+    title: Exploring Two-Variable Data
+    weight: 0.06
+    concepts:
+      - bivariate-categorical
+      - bivariate-quantitative
+  - id: 3
+    title: Collecting Data
+    weight: 0.13
+    concepts:
+      - sampling-methods
+      - experimental-design
+  - id: 4
+    title: Probability, Random Variables, and Probability Distributions
+    weight: 0.15
+    concepts:
+      - probability-rules
+      - random-variables
+      - binomial-geometric
+  - id: 5
+    title: Sampling Distributions
+    weight: 0.10
+    concepts:
+      - sampling-dist-proportion
+      - sampling-dist-mean
+  - id: 6
+    title: "Inference for Categorical Data: Proportions"
+    weight: 0.13
+    concepts:
+      - ci-proportion
+      - ht-proportion
+      - two-prop-inference
+  - id: 7
+    title: "Inference for Quantitative Data: Means"
+    weight: 0.13
+    concepts:
+      - ci-mean
+      - ht-mean
+      - two-sample-mean
+  - id: 8
+    title: "Inference for Categorical Data: Chi-Square"
+    weight: 0.04
+    concepts:
+      - chi-square-gof
+      - chi-square-independence
+  - id: 9
+    title: "Inference for Quantitative Data: Slopes"
+    weight: 0.08
+    concepts:
+      - inference-slope
+notes: >
+  AP Statistics on the 2020 CED (still in effect for May 2026; the "Effective
+  Fall 2026" framework applies to the 2026-27 cohort). 9 units. Weights chosen
+  as midpoints of CED ranges; sum to 1.00. Heavy emphasis on inference (units
+  6+7+8+9 = 38%); foundations (1+2+3 = 37%); probability/sampling distributions
+  (4+5 = 25%). Deadline 2026-05-13 per Harrison's estimate; verify against
+  official 2026 schedule.
+generated_by: claude-opus-4-7
+generated_at: 2026-05-03

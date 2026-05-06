@@ -1,0 +1,154 @@
+concepts:
+  - slug: coulomb-gauss
+    title: Coulomb's law and Gauss's law
+    knowledge_points:
+      - "F = kq1q2/r^2; E = F/q"
+      - "Gauss: flux = q_enc/eps0; only enclosed charge contributes"
+      - "Symmetry classes: sphere, infinite cylinder, infinite plane"
+      - "Charge outside a closed surface contributes zero net flux"
+    prereqs: []
+    estimated_hours: 1.0
+    target_refs: [{unit: 8}]
+
+  - slug: electric-potential
+    title: Electric potential and potential energy
+    knowledge_points:
+      - "V = kq/r for point charge; superposition for distributions"
+      - "delta_V = -integral(E dr); E = -dV/dx"
+      - "U_E = kq1q2/r; delta_U = q*delta_V"
+      - "Equipotentials are perpendicular to field lines"
+    prereqs:
+      - slug: coulomb-gauss
+        weight: 0.7
+        reason: E field is prerequisite for computing V via line integral
+    estimated_hours: 1.0
+    target_refs: [{unit: 9}]
+
+  - slug: conductors-equilibrium
+    title: Conductors in electrostatic equilibrium
+    knowledge_points:
+      - "E = 0 inside a conductor in equilibrium (free charges + equilibrium => F=0)"
+      - "All net charge resides on the outer surface"
+      - "V is constant throughout a conductor (E=0 => no potential drop)"
+      - "E(r<R) = 0, E(r>R) = kQ/r^2, V(r<R) = kQ/R for solid sphere"
+      - "Gauss argument: interior Gaussian surface => q_enc=0 => charge on surface"
+    prereqs:
+      - slug: coulomb-gauss
+        weight: 0.9
+        reason: Gauss's law is the formal argument for charge-on-surface
+      - slug: electric-potential
+        weight: 0.6
+        reason: Constant V inside conductor follows from E=0
+    estimated_hours: 1.0
+    target_refs: [{unit: 10}]
+    diagnostic_flags: [gap_closing_2026-05-03]
+
+  - slug: capacitors-dielectrics
+    title: Capacitors and dielectrics
+    knowledge_points:
+      - "C = Q/V = kappa*eps0*A/d for parallel plate"
+      - "Battery connected => V constant; Q, C, E, U all scale with kappa"
+      - "Battery disconnected => Q constant; V, E, U all decrease by factor kappa"
+      - "U_C = (1/2)QV = (1/2)CV^2 = Q^2/(2C)"
+      - "Series/parallel combination rules"
+    prereqs:
+      - slug: conductors-equilibrium
+        weight: 0.8
+        reason: Plates are conductors; conductor invariants apply
+    estimated_hours: 1.5
+    target_refs: [{unit: 10}]
+    diagnostic_flags: [weak_2026-05-03]
+
+  - slug: dc-circuits
+    title: DC circuits and Kirchhoff's laws
+    knowledge_points:
+      - "KCL: sum of currents at node = 0"
+      - "KVL: sum of voltages around loop = 0"
+      - "R = rho*l/A; I = V/R; P = IV"
+      - "Series/parallel resistor combinations"
+    prereqs: []
+    estimated_hours: 1.0
+    target_refs: [{unit: 11}]
+
+  - slug: rc-circuits
+    title: RC circuits
+    knowledge_points:
+      - "Q(t) = Q0 * exp(-t/RC) on discharge; tau = RC"
+      - "U_C(t) = U0 * exp(-2t/RC) because U proportional to Q^2"
+      - "At t=tau: Q = Q0/e, U = U0/e^2 (not 1/e)"
+      - "Charging: Q(t) = Q_max(1 - exp(-t/RC))"
+    prereqs:
+      - slug: capacitors-dielectrics
+        weight: 0.8
+        reason: RC behavior derives from capacitor charge-voltage relation
+      - slug: dc-circuits
+        weight: 0.7
+        reason: Kirchhoff loop equation gives the RC differential equation
+    estimated_hours: 1.0
+    target_refs: [{unit: 11}]
+    diagnostic_flags: [error_energy_vs_charge_2026-05-03]
+
+  - slug: magnetic-force
+    title: Magnetic force on charges and currents
+    knowledge_points:
+      - "F = q(v x B); force is perpendicular to v, so no work done"
+      - "F on wire = I(dl x B)"
+      - "Circular motion in uniform B: r = mv/(qB)"
+      - "Magnetic force does no work on a single charge (F perp v)"
+      - "Motors: energy comes from EMF source, not directly from B"
+    prereqs: []
+    estimated_hours: 0.5
+    target_refs: [{unit: 12}]
+    diagnostic_flags: [gap_motor_paradox_2026-05-03]
+
+  - slug: biot-savart-ampere
+    title: Biot-Savart law and Ampere's law
+    knowledge_points:
+      - "Biot-Savart: dB = (mu0/4pi)(I dl x r_hat)/r^2; use for arbitrary geometry"
+      - "Ampere: closed integral B dl = mu0*I_enc; use when symmetry lets you pull B out"
+      - "Symmetry classes for Ampere: infinite straight wire, solenoid, toroid"
+      - "B inside solenoid: B = mu0*n*I"
+    prereqs:
+      - slug: magnetic-force
+        weight: 0.5
+        reason: Both describe magnetic field; context is shared
+    estimated_hours: 1.5
+    target_refs: [{unit: 12}]
+
+  - slug: faraday-lenz
+    title: Faraday's law and Lenz's law
+    knowledge_points:
+      - "EMF = -d(Phi_B)/dt; Phi_B = integral(B dA)"
+      - "Lenz: induced current opposes the change in flux (not the flux itself)"
+      - "N-pole down approaching ring: B at ring points DOWN (field exits N pole downward)"
+      - "Induced current creates field to oppose increase => counterclockwise viewed from above"
+      - "Force on magnet always opposes motion (slows fall both approaching and receding)"
+    prereqs:
+      - slug: biot-savart-ampere
+        weight: 0.6
+        reason: Need RHR and field direction intuition to apply Lenz correctly
+    estimated_hours: 1.5
+    target_refs: [{unit: 13}]
+    diagnostic_flags: [field_direction_error_2026-05-03]
+
+  - slug: inductors-rl-lc
+    title: Inductors, RL and LC circuits
+    knowledge_points:
+      - "EMF = -L dI/dt; opening switch creates huge V => spark"
+      - "U_L = (1/2)LI^2"
+      - "RL: tau = L/R; current decays exponentially on switch open"
+      - "LC: omega = 1/sqrt(LC); energy oscillates between L and C"
+      - "L_solenoid = mu0_core * N^2 * A / l"
+    prereqs:
+      - slug: faraday-lenz
+        weight: 0.8
+        reason: Inductance is defined via Faraday; EMF = -L dI/dt derives from it
+      - slug: rc-circuits
+        weight: 0.5
+        reason: RL circuit analysis mirrors RC; same exponential form
+    estimated_hours: 1.0
+    target_refs: [{unit: 13}]
+    diagnostic_flags: [strong_2026-05-03]
+
+generated_by: claude-opus-4-7
+generated_at: 2026-05-03
