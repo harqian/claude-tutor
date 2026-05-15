@@ -1,18 +1,42 @@
 domain: ap_stats
-last_updated: 2026-05-04T19:00:00-07:00
+last_updated: 2026-05-06T20:00:00-07:00
 
 summary: |
-  Session on 2026-05-04 (9 days to exam): full diagnostic across inference
-  (CI interpretation, paired vs independent identification, pooled vs unpooled
-  WHY, scope-of-inference 2x2) — all solid after probing. Self-reported strong
-  on the rest of the curriculum (untested this session). Slope inference taught
-  end-to-end: t-procedure analogy, SE_b (formula sheet), df = n-2 (derived via
-  the constraint argument: each estimated parameter imposes one linear
-  constraint on residuals), H0/Ha (twice flipped H0/Ha during the session — first
-  on 2-prop, then on slope; saved as a recurring pattern), LINER conditions,
-  and reading regression printouts. Practiced rubric-correct HT conclusion
-  phrasing on a Minitab-style example and surfaced the evidence-vs-design
-  conflation (significance ≠ generalizability). Slope inference now solid.
+  Two sessions to date.
+
+  Session 2026-05-04 (9 days to AP exam): diagnostic across inference (CI
+  interpretation, paired vs independent identification, pooled vs unpooled,
+  scope-of-inference 2x2) — all locked after probing. Slope inference taught
+  end-to-end (t-procedure analogy, SE_b, df = n-2 via constraint argument,
+  H0/Ha, LINER, regression printouts, rubric phrasing). Carded H0/Ha sign-flip
+  pattern after observing it twice (2-prop, then slope).
+
+  Session 2026-05-06 (1 day to school AP-style test): mixed FRQ drill biased
+  toward untested concepts. Three findings:
+
+  (1) Chi-square selection rule was the named gap. Test mechanics carded
+  prior, but independence-vs-homogeneity distinguishing rule was effectively
+  unseen. Taught operational rule (1 sample 2 vars → independence; 2+ samples
+  1 var → homogeneity; 1 sample 1 var + claimed dist → GOF), distinguished
+  by sampling design (what's fixed by design vs random). Three cards.
+
+  (2) FRQ A revealed sampling-distribution-of-mean confusion: wrote
+  SD = σ/n (instead of σ/√n), used t-distribution for a probability calc
+  with known σ (should be z), and parroted "right-skewed" for the sampling
+  distribution shape when CLT applies. The contradiction was that part (c)
+  he correctly invoked the CLT, but in part (a) treated the sampling
+  distribution as inheriting the population's right-skew. Demoted
+  sampling-dist-mean to shaky. Four mistake-flavored cards.
+
+  (3) Type I/II + power was a known gap with no cards. Taught from scratch
+  via two-overlapping-curves picture, then built interactive viz at
+  out/artifacts/2026-05-06_193100_power-tradeoff.html (sliders for n, σ,
+  μ_a, α; direct-manipulation cutoff and effect-size handles). Mnemonic
+  Option A landed (1 ↔ null world, 2 ↔ alternative world). FRQ E surfaced
+  the most common student misconception: treating effect size as a lever
+  the researcher controls. Two cards.
+
+  H0/Ha sign-flip pattern not retested this session — assume still latent.
 
 # Per-concept state. Update in place each session.
 # State: unseen | shaky | solid (for 'solid', "self-reported" means he claims
@@ -20,72 +44,119 @@ summary: |
 concepts:
   - slug: univariate-graphical
     state: solid
-    notes: self-reported, not probed this session
+    notes: self-reported, not probed
   - slug: univariate-numerical
     state: solid
-    notes: self-reported, not probed this session
+    notes: self-reported, not probed
   - slug: bivariate-categorical
     state: solid
-    notes: self-reported, not probed this session
+    notes: self-reported, not probed
   - slug: bivariate-quantitative
     state: solid
-    notes: self-reported, not probed this session
+    notes: self-reported, not probed
   - slug: sampling-methods
     state: solid
-    notes: probed via scope-of-inference; nailed after framing pivot
+    notes: probed via scope-of-inference; nailed after framing pivot (2026-05-04)
   - slug: experimental-design
     state: solid
-    notes: probed via scope-of-inference 2x2; took 7 turns of probing but locked the model (random assignment fights confounding, random sampling fights selection bias)
+    notes: probed via scope-of-inference 2x2 (2026-05-04); 7 turns to lock
   - slug: probability-rules
     state: solid
-    notes: self-reported, not probed this session
+    notes: self-reported, not probed
   - slug: random-variables
     state: solid
-    notes: self-reported, not probed; "always plus, never minus" combination rule untested
+    notes: |
+      Probed 2026-05-06 via compound test of combination + linear transform
+      rules: Var(2X1 - X2 + 5) where X1, X2 are iid die rolls. Got 5σ²
+      cleanly: correctly squared the 2 (→ 4σ²), correctly added Var(-X2)
+      as plus σ² (always plus, never minus), correctly dropped the +5
+      (additive constants don't affect variance). Locked.
   - slug: binomial-geometric
     state: solid
-    notes: self-reported, not probed this session
+    notes: self-reported, not probed
   - slug: sampling-dist-proportion
     state: solid
-    notes: self-reported, not probed this session
+    notes: self-reported, not probed
   - slug: sampling-dist-mean
-    state: solid
-    notes: self-reported, not probed this session
+    state: shaky
+    notes: |
+      DEMOTED 2026-05-06 from solid. FRQ A revealed three execution gaps
+      on a probability question about x̄ (factory soda, μ=12, σ=0.15, n=40,
+      P(x̄ < 11.95)):
+      (1) SD formula error: wrote σ/n = 0.15/40 instead of σ/√n = 0.15/√40
+          (≈ 0.0237). Off by factor of √n.
+      (2) Wrong distribution: used t with df=39 for a probability calc with
+          KNOWN σ. Should use z. Trigger for t is unknown σ, not "I'm
+          working with a sample mean."
+      (3) Shape confusion: described the sampling distribution as
+          "right-skewed" because the population is. Within the same FRQ,
+          part (c) correctly invoked CLT — so the CONCEPT was there but
+          didn't transfer. Population shape ≠ sampling distribution shape.
+
+      Four mistake-flavored cards pushed (c39Qwm2e, Xl12gYR2, 1okDBlGw,
+      kjLoLlTv). Re-probe next session before promoting.
   - slug: ci-proportion
     state: solid
-    notes: probed CI interpretation; nailed repeated-sampling framing with one minor phrasing tighten ('it is the interval that is random, p is fixed')
+    notes: probed CI interpretation 2026-05-04; nailed repeated-sampling framing
   - slug: ht-proportion
     state: solid
-    notes: implicit via 2-prop probe; not directly tested
+    notes: implicit via 2-prop probe (2026-05-04); not directly tested
   - slug: two-prop-inference
     state: solid
-    notes: probed pooled vs unpooled WHY; initial sign flip on H0 (said 'assumes different'), recovered fast after redirect to 'what does H0 say?' Now solid on the pooled-under-H0 logic
+    notes: probed pooled vs unpooled WHY (2026-05-04); pooled-under-H0 logic locked
   - slug: ci-mean
     state: solid
-    notes: self-reported, not probed this session
+    notes: self-reported, not probed
   - slug: ht-mean
     state: solid
-    notes: paired-vs-independent identification probed (see two-sample-mean); other aspects self-reported
+    notes: paired-vs-independent identification probed (2026-05-04); other aspects self-reported
   - slug: two-sample-mean
     state: solid
-    notes: probed paired vs independent; initial framing was 'two populations' which is wrong criterion. Locked after I introduced the shuffle test (can you randomly reorder one group's data without losing information? no => paired)
+    notes: probed paired vs independent (2026-05-04); shuffle test locked it
   - slug: chi-square-gof
     state: solid
-    notes: self-reported, not probed this session
+    notes: |
+      Test mechanics self-reported solid (carded prior). Selection rule
+      probed 2026-05-06: identified GOF correctly when given 9:3:3:1 pea
+      plant scenario. Operational rule taught and carded (sEaGa2bA):
+      one sample, one variable, claimed distribution.
   - slug: chi-square-independence
     state: solid
-    notes: self-reported, not probed; the GOF/independence/homogeneity selection trap untested
+    notes: |
+      Test mechanics self-reported solid (carded prior). Independence-vs-
+      homogeneity distinguishing rule was effectively unseen until
+      2026-05-06: he could pick the right test for each scenario but
+      couldn't articulate the criterion. Taught operational rule based on
+      sampling design (what's fixed vs random) and conclusion-language
+      difference (associated vs differs across). Two cards (zlEPQ6GP,
+      pNm8GlC2).
   - slug: inference-slope
     state: solid
     notes: |
-      Taught end-to-end this session. Locked: t-procedure analog to means,
-      SE_b on formula sheet, df = n-2 (derived via constraint argument and
-      generalized to chi-square df via the same rule), H0: β = 0 / Ha: β ≠ 0,
-      LINER conditions (E was the blank; equal-variance / homoscedasticity),
-      reading SE_b/t/df/p-value off Minitab-style regression output, rubric-
-      correct conclusion phrasing. One earlier flip: said H0 was "non-zero
-      linear relationship" (that's Ha); same H0/Ha flip pattern as 2-prop.
-      Carded the H0-always-null rule (CXdNB2KW) to fix the recurring error.
+      Taught end-to-end 2026-05-04. Locked: t-procedure analog, SE_b,
+      df = n-2, H0/Ha, LINER, regression-printout reading, rubric phrasing.
+      One earlier H0/Ha flip (matched 2-prop pattern); carded the rule.
+      Not retested 2026-05-06.
+  - slug: power-and-errors
+    state: shaky
+    notes: |
+      NEW concept entry 2026-05-06. Was a known gap with no cards. Taught
+      from scratch via two-overlapping-curves picture (W1 = H0 true at μ_0,
+      W2 = H_a true at μ_a; α = right tail of W1 past cutoff, β = left tail
+      of W2 before cutoff, power = right tail of W2 past cutoff). Built
+      interactive viz at out/artifacts/2026-05-06_193100_power-tradeoff.html.
+
+      Type I/II mnemonic locked: 1 ↔ null world (only mistake available is
+      reject) → false alarm. 2 ↔ alternative world (only mistake is fail to
+      reject) → missed it. Rejected the "boy who cried wolf" framing as
+      not tied to 1 and 2; chose Option A.
+
+      FRQ E surfaced the most common student misconception: treating effect
+      size as a lever the researcher can pull. Researchers control n, σ, α
+      — NOT effect size (that's set by reality). Need to retest this on
+      next FRQ.
+
+      Two cards live in cross_cutting (hbSSLhDu mnemonic, 0vWQGYP4 levers).
 
 # Card inventory across both spaced-repetition systems. Pre-existing cards
 # (created before this session) are catalogued by source + concept slug so
@@ -94,13 +165,15 @@ concepts:
 # here is the canonical lookup ('do I already have a card for concept X?').
 cards:
   totals:
-    mochi_important_ap_deck: 20   # stats only; deck also holds 4 physics-em cards. 7 added on 2026-05-04
+    mochi_important_ap_deck: 29   # stats only; deck also holds 4 physics-em cards. 7 added 2026-05-04, 9 added 2026-05-06 (3 chi-square selection, 4 sampling-dist-mean, 2 power/Type-I-II)
     zippyflash: 11                # stats-tagged only; library also has 5 topology + 1 misc
   cross_cutting:  # meta-cards that apply across multiple inference procedures
     mochi:
       - {id: 4V4RXMwg, granularity: conceptual, front: "Why estimating a parameter costs a degree of freedom (df = n - constraints; covers t, slope, χ² GOF, χ² independence)", session: 2026-05-04}
       - {id: CXdNB2KW, granularity: conceptual, front: "H0 is always the null/no-effect/equality version (rule across all HTs; prosecutor mnemonic)", session: 2026-05-04}
       - {id: SyJe7Rrq, granularity: conceptual, front: "HT conclusion 4-piece rubric template (compare → decide → 'convincing evidence' → population scope; covers all HTs)", session: 2026-05-04}
+      - {id: hbSSLhDu, granularity: conceptual, front: "Type I vs Type II error — what's the rule, tied to 1 and 2? (World 1 / World 2 mnemonic)", session: 2026-05-06}
+      - {id: 0vWQGYP4, granularity: conceptual, front: "Power = 1 - β depends on what four things, and how does each lever move it? (n, effect size, σ, α; effect size NOT under researcher control)", session: 2026-05-06}
   by_concept:
     sampling-methods:
       mochi:
@@ -111,6 +184,12 @@ cards:
     experimental-design:
       mochi:
         - {id: ILdotUEY, granularity: conceptual, front: "Random sampling vs random assignment - 2x2 of conclusions", session: 2026-05-04}
+    sampling-dist-mean:
+      mochi:
+        - {id: c39Qwm2e, granularity: conceptual, front: "For the sampling distribution of x̄: what is the center, spread, and shape? (with CLT threshold)", session: 2026-05-06}
+        - {id: Xl12gYR2, granularity: conceptual, front: "When computing P(x̄ < c): what's the SE you divide by, and why is it not just σ? (mistake card)", session: 2026-05-06}
+        - {id: 1okDBlGw, granularity: conceptual, front: "Probability about x̄ — z or t, and when does t come in? (mistake card)", session: 2026-05-06}
+        - {id: kjLoLlTv, granularity: conceptual, front: "Population is right-skewed — what's the shape of the sampling distribution of x̄? (mistake card)", session: 2026-05-06}
     ci-proportion:
       mochi:
         - {id: 8lO1K6XV, granularity: tabled, front: "1-proportion z procedures conditions table (R/I/N with p0 vs p_hat note)"}
@@ -158,6 +237,7 @@ cards:
       mochi:
         - {id: l8b6GKNh, granularity: tabled, front: "chi-square GOF conditions (df = k-1)"}
         - {id: oz9jMElk, granularity: tabled, front: "chi-square GOF test full description"}
+        - {id: sEaGa2bA, granularity: conceptual, front: "When to use χ² GOF (1 sample, 1 variable, claimed distribution)", session: 2026-05-06}
       zippyflash:
         - {id: 986763d9-efb9-49d7-bc05-a0f5f958ab76, granularity: atomic, front: "Normal/Large Counts for chi-square test (general)"}
     chi-square-independence:
@@ -166,6 +246,8 @@ cards:
         - {id: aUrRgJlm, granularity: tabled, front: "chi-square homogeneity conditions"}
         - {id: cofKONqb, granularity: tabled, front: "chi-square independence test full description"}
         - {id: FaXXui9I, granularity: tabled, front: "chi-square homogeneity test full description"}
+        - {id: zlEPQ6GP, granularity: conceptual, front: "When to use χ² independence (1 sample, 2 variables, asks if associated; vs homogeneity)", session: 2026-05-06}
+        - {id: pNm8GlC2, granularity: conceptual, front: "When to use χ² homogeneity (2+ separate samples, 1 variable, asks if distributions differ across groups; vs independence)", session: 2026-05-06}
       zippyflash:
         - {id: 986763d9-efb9-49d7-bc05-a0f5f958ab76, granularity: atomic, front: "Normal/Large Counts for chi-square test (general; shared with GOF)"}
     inference-slope:
@@ -173,11 +255,9 @@ cards:
         - {id: 54HFWf2o, granularity: tabled, front: "Regression t procedures conditions (LINER, df = n-2)"}
         - {id: t8YWQ0wU, granularity: tabled, front: "LINER conditions for slope inference (with how-to-check + why-it-matters per letter)", session: 2026-05-04}
   gaps:  # concepts with NO cards in either system; candidates for next-session card creation
-    - power / Type I / Type II relationships (not in Unit 9 directly; cross-cuts inference HTs)
     - p-value interpretation (rubric-correct phrasing)
-    - CLT threshold reasoning (n >= 30 vs population-normal vs sample-roughly-symmetric)
-    - random variable combination rules (E(X+Y) always additive; Var(X +/- Y) = Var(X) + Var(Y) for independent, ALWAYS plus, even for X-Y)
-    - linear transformation rules for distributions (mean shifts and scales; sd only scales by |a|)
+    - random variable combination rules (concept locked 2026-05-06 but no card; could card the "always plus, never minus" rule explicitly)
+    - linear transformation rules for distributions (concept locked 2026-05-06 but no card; mean shifts and scales, sd only scales by |a|)
 
 # Selective log. Only entries worth remembering long-term.
 log:
@@ -221,5 +301,88 @@ log:
         front: "HT conclusion: AP rubric template + the trap"
         back: "4-piece skeleton: (1) compare p-value to α, (2) decision about H0, (3) 'convincing evidence' phrase, (4) population scope. Trap: significance ≠ generalizability; generalizability comes from sampling design, not p-value."
 
+  - ts: 2026-05-06T20:00:00-07:00
+    mode: drill
+    concept: multiple
+    note: |
+      Mixed FRQ drill, night before school AP-style test. Started in drill
+      mode, pivoted to socratic for chi-square selection (untested gap),
+      then back to FRQ-style for sampling-distribution and power.
+
+      Three findings worth remembering:
+
+      (1) Chi-square selection: he could pick the right test (GOF /
+      independence / homogeneity) given a scenario but couldn't articulate
+      the criterion. Taught the operational rule: count samples and
+      variables, attend to what's fixed by design vs random. Conclusion-
+      language difference (associated vs differs across) is what the rubric
+      enforces. Three cards.
+
+      (2) Sampling distribution of x̄: solid in self-report, shaky on
+      execution. FRQ A (factory soda probability) revealed σ/n vs σ/√n
+      formula slip, t-vs-z confusion (used t-distribution for a probability
+      calc with given σ), and population-shape-vs-sampling-shape parroting.
+      Demoted to shaky. Four mistake-flavored cards covering each error.
+
+      (3) Power + Type I/II: was a flagged gap. Taught from scratch via
+      two-overlapping-curves picture, then built an interactive viz with
+      direct-manipulation cutoff and effect-size handles (lives at
+      out/artifacts/2026-05-06_193100_power-tradeoff.html). Mnemonic
+      Option A landed (1 ↔ null world, 2 ↔ alternative world). FRQ E
+      revealed the textbook student misconception: treating effect size
+      as a lever the researcher controls. Re-test on next FRQ. Two cards.
+
+      Process notes:
+      - First card pair on Type I/II ("boy who cried wolf") was rejected
+        as bad mnemonic; replaced with Option A (worlds 1 and 2). Original
+        cards deleted.
+      - First card on power tradeoff was deleted with the boy-who-cried-
+        wolf card; replaced with the four-levers card after the viz lesson.
+      - Updated feedback memory feedback_socratic_blanks.md: extended the
+        "skip socratic when content is unseen" rule to also cover "skip
+        socratic when content is genuinely shaky / not really understood."
+        Triage ladder: really not understanding → just teach. Kinda shaky
+        → ask. Solid → keep socratic.
+
+      Downloaded 2025/2024/2023 AP Stats FRQ + scoring guidelines PDFs to
+      ~/Downloads/ap/ for review.
+    mochi_cards:
+      - id: sEaGa2bA
+        deck: important ap
+        front: "When do you use a $\\chi^2$ goodness-of-fit test?"
+        back: "One sample, one categorical variable, comparing observed counts to a claimed/theoretical distribution. df = k - 1. Conclusion: 'differs from the claimed distribution.'"
+      - id: zlEPQ6GP
+        deck: important ap
+        front: "When do you use a $\\chi^2$ test for independence?"
+        back: "One sample, two categorical variables measured on each subject. Only the grand total is fixed by design. df = (r-1)(c-1). Asks: are the variables associated? Conclusion: 'associated.'"
+      - id: pNm8GlC2
+        deck: important ap
+        front: "When do you use a $\\chi^2$ test for homogeneity?"
+        back: "Two or more separate samples (one per group), one categorical variable per subject. Group sizes (row totals) fixed by design. df = (r-1)(c-1). Asks: do distributions differ across groups? Conclusion: 'differs across groups.'"
+      - id: hbSSLhDu
+        deck: important ap
+        front: "Type I vs Type II error — what's the rule, tied to '1' and '2'?"
+        back: "Two worlds. World 1 (H0 true): only mistake is rejecting → Type 1 = false alarm, prob α (you set this). World 2 (Ha true): only mistake is failing to reject → Type 2 = missed it, prob β. Power = 1-β. Mnemonic: 1 ↔ null world, 2 ↔ alternative world. NOT α + β = 1."
+      - id: c39Qwm2e
+        deck: important ap
+        front: "For the sampling distribution of $\\bar{X}$: center, spread, shape?"
+        back: "Center: μ. Spread: σ/√n (NOT σ/n). Shape: n ≥ 30 → approximately Normal by CLT regardless of population; n < 30 → depends on population shape. Averages are tighter and rounder than individual observations."
+      - id: Xl12gYR2
+        deck: important ap
+        front: "When computing P(x̄ < c): what's the SE, and why is it not just σ?"
+        back: "Divide by σ/√n, NOT σ. The /√n is the entire signature of 'I'm working with a sample mean, not a single value.' Without √n, you've computed the prob for ONE observation."
+      - id: 1okDBlGw
+        deck: important ap
+        front: "Probability about x̄: z or t? When does t come in?"
+        back: "z when σ is known (probability calc on a sampling distribution; not inference). t only when σ is unknown and you've replaced it with sample SD s (inferential setting: CI or HT). Trigger for t is unknown σ, not 'sample mean.'"
+      - id: kjLoLlTv
+        deck: important ap
+        front: "Population is right-skewed — what's the shape of the sampling distribution of x̄?"
+        back: "Depends on n. n ≥ 30: approximately Normal by CLT (skew gets averaged out). n < 30: inherits population skew. Population shape ≠ sampling distribution shape; CLT is the bridge."
+      - id: 0vWQGYP4
+        deck: important ap
+        front: "Power = 1 - β depends on what 4 things, and how does each lever move it?"
+        back: "↑n (smaller SE, narrower curves), ↑effect size (curves further apart; usually NOT under researcher control), ↓σ (smaller SE; via better measurement / homogeneous samples / paired design), ↑α (looser cutoff; trades against Type I rate). Tradeoff: at fixed design, lowering α raises β. To shrink both, narrow the curves themselves."
+
 generated_by: claude-opus-4-7
-generated_at: 2026-05-04
+generated_at: 2026-05-06

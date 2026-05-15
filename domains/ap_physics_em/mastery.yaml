@@ -1,17 +1,37 @@
 domain: ap_physics_em
-last_updated: 2026-05-03T00:00:00Z
+last_updated: 2026-05-10T00:00:00Z
 
 summary: |
-  First real session on conductors-equilibrium. Rebuilt the E=0 argument from scratch
-  via equilibrium (not Gauss). Key correction: Gauss proves q_enc=0 from E=0, not the
-  reverse. Extended to surface: E perpendicular (not zero) because tangential component
-  would cause charge to slide. V=constant derived from E=0 via line integral. All three
-  corollaries now solid.
+  Conductors-equilibrium solid from 2026-05-03 (E=0 from equilibrium, charge on
+  surface, V constant, surface E perpendicular).
+
+  Coulomb/Gauss solid as of 2026-05-10. Flux invariance is reflex across radius
+  scaling, off-center, external charges, mixed-sign enclosed, and uniform/nonuniform
+  external fields. Symmetry-based field extraction installed: E = lambda/(2*pi*eps0*r)
+  for line charge via L-cancellation, E = sigma/(2*eps0) for nonconducting sheet via
+  pillbox. Conductor surface vs nonconducting sheet factor-of-2 trap installed
+  (E_conductor = sigma/eps0, not sigma/(2*eps0), because E=0 inside metal). Slab
+  paradox (sigma_surface vs total-per-footprint) resolved: per-face sigma is the
+  right local density either way.
+
+  DC circuits just started 2026-05-10. Series invariant is same I; parallel
+  invariant is same V. Equivalent resistance correctly characterized (parallel
+  = harmonic mean / n). One bulb-topology miss was diagram-parse error, not
+  physics. Harrison says he's experienced with circuits; AP focus = diagram
+  parse + formalism traps, not concepts.
+
+  Visualization artifact at out/artifacts/2026-05-10_172431_gauss-surfaces.html
+  (line/sheet/conductor side-by-side).
+
+  Still to cover: electric-potential (unseen), capacitors-dielectrics (shaky
+  from diagnostic), rc-circuits (shaky from diagnostic, energy vs charge
+  confusion), magnetic-force (unseen), biot-savart-ampere (unseen, label-only
+  gap), faraday-lenz (shaky from diagnostic, field-direction errors).
 
 concepts:
   - slug: coulomb-gauss
-    state: unseen
-    notes:
+    state: solid
+    notes: '2026-05-10 Codex session. Flux invariance reflex across all probed cases (radius doubling, off-center, external, mixed-sign enclosed +Q -Q -> 0 and +2Q -Q -> Q/eps0, uniform external -> 0, nonuniform external -> still 0 via strong-over-small-area cancellation). Symmetry-based field extraction installed for line (cylinder L-cancellation), nonconducting sheet (pillbox 2EA), conductor (factor of 2 disappears, E_in metal = 0). Slab paradox resolved.'
   - slug: electric-potential
     state: unseen
     notes:
@@ -22,8 +42,8 @@ concepts:
     state: shaky
     notes: flagged weak in diagnostic; not yet touched
   - slug: dc-circuits
-    state: unseen
-    notes:
+    state: shaky
+    notes: '2026-05-10 just started. Series/parallel invariants reflex (same I in series, same V in parallel). Equivalent resistance correctly stated (parallel = harmonic mean / n). One bulb-topology question missed via diagram-parse error (physics was right). Per Harrison, experienced with circuits; AP focus should be diagram parsing + formalism traps, not concepts.'
   - slug: rc-circuits
     state: shaky
     notes: energy vs charge confusion flagged in diagnostic; not yet touched
@@ -62,3 +82,63 @@ log:
         deck: ap e&m
         front: "What direction is E at the surface of a conductor, and why?"
         back: "Perpendicular to the surface (no tangential component). If there were a tangential component, surface charges would slide along the surface - not equilibrium. Works for any shape, not just spheres."
+  - ts: 2026-05-10T00:00:00Z
+    mode: socratic
+    concept: coulomb-gauss
+    note: |
+      Codex session (Claude reconciled afterward from pasted transcript).
+      Coulomb/Gauss probed deeply, plus dc-circuits opening.
+
+      Flux invariance reflex installed across all relevant cases: radius
+      doubling on centered point charge, off-center enclosed charge, external
+      charge, mixed-sign enclosed (+Q and -Q -> 0; +2Q and -Q -> Q/eps0),
+      uniform external field, nonuniform external field (strong-over-small-
+      area balances weak-over-large-area).
+
+      Symmetry-based field extraction: line charge via cylinder (L cancels
+      because q_enc and curved-wall area both scale with L), nonconducting
+      sheet via pillbox or rectangular box (2EA because field exits both
+      sides), conductor surface (factor of 2 disappears because E=0 in
+      metal; only outside face contributes). Slab paradox resolved: tiny
+      box and big box give same field because per-face sigma is the right
+      local density; total per footprint is 2*sigma for the slab.
+
+      DC circuits: series/parallel invariants clean. Series-bulb topology
+      trap (add parallel bulb to one of two series bulbs -> untouched bulb
+      gets brighter because total R drops). Missed initially on diagram
+      parse, not physics. Harrison flagged self as experienced with circuits;
+      AP focus should be parse + formalism traps.
+
+      Codex correction landed: do not flatten valid intuition into formula-
+      only correction. Preserve the intuition, then compress to the exam-safe
+      formula. Saved to feedback_tutoring.md (subsequently moved to ai_tutor
+      project memory).
+
+      Built visualization at out/artifacts/2026-05-10_172431_gauss-surfaces.html
+      with line/sheet/conductor side-by-side; PNG screenshot beside it.
+      Added an npx -y live-server fallback line to project AGENTS.md.
+    mochi_cards:
+      - id: YcfAkWEI
+        deck: ap e&m
+        front: "Gauss's law on an infinite line of charge, linear density $\\lambda$. Why does the Gaussian cylinder length $L$ cancel?"
+        back: "Flux $\\propto L$ and $q_{enc} \\propto L$. They cancel: $E = \\lambda/(2\\pi\\epsilon_0 r)$."
+      - id: L8gvQXZz
+        deck: ap e&m
+        front: "Infinite nonconducting sheet, surface density $\\sigma$. Why is the Gaussian box flux $2EA$, not $EA$?"
+        back: "Field exits both faces. Sides skim (zero flux). $E = \\sigma/(2\\epsilon_0)$."
+      - id: fCPWySLJ
+        deck: ap e&m
+        front: "Why is $E$ just outside a conducting surface $\\sigma/\\epsilon_0$, while a nonconducting infinite sheet gives $\\sigma/(2\\epsilon_0)$?"
+        back: "Conductor's inside has $E=0$; only the outside face counts. Sheet: both sides count."
+      - id: pzBbRGI8
+        deck: ap e&m
+        front: "Infinite conducting slab with surface charge density $\\sigma$ on each outer face. Why does a Gaussian box around both faces give the same outside field as a tiny box crossing one face?"
+        back: "Yes, $E = \\sigma/\\epsilon_0$. Big box: $q_{enc} = 2\\sigma A$, flux $2EA$, cancels to the same."
+      - id: 305J7M8l
+        deck: ap e&m
+        front: "Gauss surface bookkeeping rule: which faces of a Gaussian surface contribute to flux?"
+        back: "Only faces the field pierces. Faces the field skims along contribute zero."
+      - id: MkJRnwB0
+        deck: ap e&m
+        front: "Two identical bulbs in series with an ideal battery. Add a third identical bulb in parallel with one of the original bulbs. What happens to the untouched series bulb's brightness?"
+        back: "Brighter. Total $R$ drops to $1.5R$, total $I$ rises, untouched bulb carries it."

@@ -3,7 +3,7 @@ generated_by: claude-opus-4-7
 generated_at: 2026-05-04
 ---
 domain: ap_physics_mechanics
-last_updated: 2026-05-04
+last_updated: 2026-05-11
 summary: |
   Strong calculus + algebra foundation; derivations fluent (eigenvalue solutions,
   ring integrals, second-order infinitesimal logic). Equation-sheet aware.
@@ -15,9 +15,29 @@ summary: |
   Sub-symptoms: (1) treats translational and rotational KE as either-or in rolling
   problems, (2) fuzzy on bound vs unbound interpretation of negative total energy,
   (3) doesn't factor out the dimensionless lever after the algebra finishes.
+  Note: multi-phase collisions are NOT an active weak spot per Harrison
+  (one slip on 2026-05-04, not a pattern).
 
-  Mostly unprobed but predicted fine: projectile shortcuts, drag ODE, 2D collisions,
-  pendulums, specific I values for rod/sphere/hoop.
+  Circular motion: pseudo-force terminology misled him initially ("centripetal
+  force isn't real") but the fix landed. Force-identification reflex on flat
+  curves needs reps. Banking formula untested. Vertical loop minimum speed solid.
+
+  Pendulums solid. Physical pendulum rod-about-end derived cleanly:
+  T = 2π√(2L/(3g)), effective length 2L/3. Simple pendulum already solid.
+
+  Spring chains solid: series/parallel derived (1/k_eff = 1/k1 + 1/k2 for
+  series), resistor analogy installed. Vertical-spring-released-from-natural-length
+  energy gymnastics installed (stops at 2mg/k, max speed at mg/k equilibrium).
+  Massless-connector argument for same-force-in-series corrected.
+
+  Pulley constraints solid: count rope segments through the movable pulley.
+  Massive-pulley Atwood: I/R² acts like extra inertial mass;
+  T₂ - T₁ = Ia/R² is what buys angular acceleration.
+
+  Rotational equilibrium just touched (beam-with-cable cut off mid-turn).
+
+  Mostly unprobed but predicted fine: projectile shortcuts, drag ODE,
+  2D collisions, specific I values for rod/sphere/hoop.
 concepts:
   - slug: rolling-without-slipping
     state: shaky
@@ -51,7 +71,19 @@ concepts:
     notes: pendulum + spring-compression + sphere-rolling drills all framed cleanly on first try
   - slug: collisions
     state: shaky
-    notes: ballistic pendulum probe — initially carried energy conservation through the collision (classic inelastic-KE-loss trap); recovered with one prompt. Phase-separation reflex needs more reps.
+    notes: ballistic pendulum probe on 2026-05-04, initially carried energy conservation through the collision (classic inelastic-KE-loss trap); recovered with one prompt. NOT an active weak spot per Harrison (one slip, not a pattern).
+  - slug: circular-motion
+    state: shaky
+    notes: voice probe. Got a=v²/r and mv²/r reflex but called centripetal force "fake" (pseudo-force confusion); recovered after tire-contact-patch grounding. At top of vertical loop defaulted to N upward; corrected to N down on second prompt. v_min=√(gR) via N=0 clean. Banking decomposition qualitatively correct, opted out of formula.
+  - slug: pendulums
+    state: solid
+    notes: 'simple pendulum clean (T = 2π√(L/g)). Physical pendulum rod-about-end derived cleanly on 2026-05-11. τ = -Mg(L/2)sinθ, I_pivot = ML²/3, θ̈ = -(3g/2L)θ, T = 2π√(2L/(3g)). Effective length 2L/3 framing landed.'
+  - slug: spring-force
+    state: solid
+    notes: '2026-05-11 Codex session. Series/parallel derived (1/k_eff = 1/k1 + 1/k2 for series, k_eff = 2k for two-spring symmetric block). Resistor analogy installed ("just like parallel resistors"). Vertical spring with gravity, equilibrium shift doesn''t change ω. Released-from-natural-length stops at 2mg/k, max speed at mg/k with v = g√(m/k); forgot spring PE at equilibrium initially. Massless-connector argument for same-force-in-series corrected from "same string" reasoning.'
+  - slug: rotational-dynamics
+    state: shaky
+    notes: '2026-05-11 just touched (ΣF=0 AND Στ=0 principle). Beam-with-cable problem cut off mid-turn. Massive-pulley Atwood worked, a = (m2-m1)g/(m1+m2+I/R²), T2-T1 = Ia/R².'
 log:
   - ts: 2026-05-04
     mode: socratic
@@ -149,3 +181,114 @@ log:
         deck: important ap
         front: "Bullet $m$, $v_0$ embeds in block $M$ which swings to height $h$. Find $v_0$."
         back: "Two phases. (1) Inelastic collision → momentum: $mv_0 = (m+M)v_f$. (2) Swing → energy: $v_f = \\sqrt{2gh}$. So $v_0 = (m+M)/m \\cdot \\sqrt{2gh}$. Don't carry energy through inelastic collision."
+  - ts: 2026-05-09
+    mode: socratic
+    concept: circular-motion
+    note: |
+      Voice session via claude.ai (no MCP, hand-reconciled from transcript).
+      Probed two previously untouched concepts.
+
+      Circular motion: friction direction on flat curve took prompting; he
+      initially called centripetal force "fake," classic pseudo-force confusion.
+      Walked through tire-contact-patch grounding to install the
+      "centripetal force is whichever real force points inward" reframe.
+      Banking: opted out of the formula (was walking outside, no paper).
+      Vertical loop: defaulted to N upward at the top; corrected by visualizing
+      track-above-car. Got v_min = √(gR) cleanly via N=0.
+
+      Pendulums: simple pendulum derivation clean on first try. Physical pendulum
+      unseen, didn't have the τ = Iα setup for extended objects. Session cut off
+      mid-derivation.
+
+      Open threads: physical pendulum (rod pivoted at end, meter stick),
+      banking formula (μ-free angle relation), and the still-undrilled
+      multi-phase collision threads from 2026-05-04.
+    mochi_cards:
+      - id: GDlIZ9hd
+        deck: important ap
+        front: "What *is* the centripetal force?"
+        back: "Not a separate force. It's the name for whichever real force points toward the center: friction (flat curve), tension (string), gravity (orbit), normal-force component (banking or loop). Always identify the physical source before writing $F = mv^2/R$."
+      - id: IYdrZwcF
+        deck: important ap
+        front: "On a flat curve, what physical force provides the centripetal force on a car?"
+        back: "Static friction between tires and road. Minimum coefficient: $\\mu_{\\min} = v^2/(rg)$, from $\\mu m g = m v^2/r$."
+      - id: VXTrwk5d
+        deck: important ap
+        front: "Vertical loop, car at the top. Direction of $N$? Equation for $N$?"
+        back: "$N$ points downward. The track is above the car, pushing inward (toward center). Both $N$ and $mg$ point toward center, so $mg + N = mv^2/R$, giving $N = m(v^2/R - g)$."
+      - id: cvLp5NLm
+        deck: important ap
+        front: "Vertical loop, radius $R$. Minimum speed at the top to stay on the track?"
+        back: "$v_{\\min} = \\sqrt{gR}$. Set $N = 0$: $mg = mv^2/R$. Below this, gravity alone provides more inward pull than needed for the curve. The car falls away from the track."
+      - id: Tka6wEJq
+        deck: important ap
+        front: "Simple pendulum, length $L$, small angle. Period?"
+        back: "$T = 2\\pi\\sqrt{L/g}$. Restoring force $-mg\\sin\\theta \\approx -mg\\theta$, arc length $L\\theta$, so $a = -(g/L)\\theta$. Match $a = -\\omega^2\\theta$: $\\omega = \\sqrt{g/L}$."
+  - ts: 2026-05-11
+    mode: socratic
+    concept: pendulums
+    note: |
+      Codex session (Claude reconciled afterward from pasted transcript).
+      Physical pendulum: rod about end derivation clean. τ = -Mg(L/2)sinθ,
+      I_pivot = ML²/3, θ̈ = -(3g/2L)θ, T = 2π√(2L/(3g)). Effective length
+      2L/3 framing installed.
+
+      Pulley constraints: movable pulley + free end gave a1 = -2 a2; counting
+      rope segments through the movable pulley as the systematic trick.
+      Sanity check at m2 = 2m1 → no motion confirmed the formula
+      a2 = g(m2 - 2m1)/(m2 + 4m1).
+
+      Massive-pulley Atwood: derived T1 - T2 unequal because pulley needs
+      net torque to spin up. a = (m2 - m1)g/(m1 + m2 + I/R²); I/R² acts
+      like extra inertial mass. T2 - T1 = Ia/R² ("tension gap buys angular
+      acceleration").
+
+      Springs: series 1/k_eff = 1/k1 + 1/k2 derived (corrected from initial
+      "k_eff = 2k" mistake which was actually parallel). Equal-force-in-
+      series reasoning corrected from "same string" to "massless connector
+      can't have net force." Vertical spring + gravity: ω = √(k/m) regardless
+      of g (equilibrium shift doesn't change curvature). Released from
+      natural length: first stop at 2mg/k, max speed at mg/k equilibrium,
+      v = g√(m/k); forgot spring PE at equilibrium initially.
+
+      Two corrections from Harrison worth process notes: (1) "don't drill
+      math-transcription topics like linear drag when math is solid;
+      focus on physics modeling"; (2) "don't lock in a weak-spot label
+      from one bad answer, require a pattern." Multi-phase collisions
+      retracted from active weak-spot list.
+
+      Rotational equilibrium just started (ΣF=0 AND Στ=0); beam-with-cable
+      cut off mid-turn (cable tension found by torque about hinge).
+    mochi_cards:
+      - id: xUalbpv3
+        deck: important ap
+        front: "Movable pulley with a mass attached, fixed pulley above, rope going up-over-down-around-up to the ceiling. If the movable pulley moves down by $x$, how far does the free end move?"
+        back: "Up by $2x$. Two supporting segments each shorten by $x$ as the pulley descends."
+      - id: ylfWahBb
+        deck: important ap
+        front: "Atwood machine, masses $m_1$ and $m_2$, but the pulley has rotational inertia $I$, radius $R$, rope no-slip. Find the acceleration."
+        back: "$a = (m_2 - m_1)g / (m_1 + m_2 + I/R^2)$. The $I/R^2$ term acts like extra inertial mass."
+      - id: ACkhEqwM
+        deck: important ap
+        front: "Massive-pulley Atwood. Why are the two tensions unequal? Express the gap."
+        back: "$T_2 - T_1 = Ia/R^2$. Pulley needs net torque to angularly accelerate."
+      - id: uqhGymei
+        deck: important ap
+        front: "Two springs $k_1, k_2$ in series, pulled by force $F$. Effective stiffness?"
+        back: "$1/k_{eff} = 1/k_1 + 1/k_2$. Springs in series behave like resistors in parallel."
+      - id: 3ybYIIgP
+        deck: important ap
+        front: "Vertical spring $k$, mass $m$, released from rest at the natural length. First turning point?"
+        back: "$x = 2mg/k$, twice the equilibrium stretch."
+      - id: tft7Is8z
+        deck: important ap
+        front: "Vertical spring $k$, mass $m$, released from rest at the natural length. Max speed?"
+        back: "$v_{max} = g\\sqrt{m/k}$, reached at the equilibrium point $x = mg/k$."
+      - id: juWOyTWg
+        deck: important ap
+        front: "Uniform rod, length $L$, mass $M$, pivoted at one end. Small-angle oscillation. Period?"
+        back: "$T = 2\\pi\\sqrt{2L/(3g)}$. Effective length $2L/3$, faster than a simple pendulum of length $L$."
+      - id: CEBoKFmi
+        deck: important ap
+        front: "Two springs in series. Why is the force in both the same, even when $k_1 \\neq k_2$?"
+        back: "Connector is massless. Unequal forces would imply infinite acceleration."

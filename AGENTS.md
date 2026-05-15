@@ -21,6 +21,7 @@ This is Harrison's personal AI-tutor system. Project overview in `README.md`; re
   No human-review flag. Harrison reads what he reads; tracking it is overhead with no consumer.
 - **Mastery is authored.** `domains/<domain>/mastery.yaml` is a living document: free-text summary, per-concept state (unseen/shaky/solid), plus a selective log of sessions worth remembering. Updated each session, not appended. Routine drills update state and disappear; only insight moments / decisions / mode shifts get a log entry.
 - **Cards live in Mochi, but the inventory lives in `mastery.yaml`.** Push via the `mochi` MCP. Never create a separate `cards.yaml`. Whenever a session creates cards, the session's `log` entry **must** include a `mochi_cards` block with id, deck, front, back for each card. This is the canonical card inventory — without it we lose track of what we've made. Tag cards in Mochi by domain and concept slug for cross-reference.
+- **Always load the `mochi` skill before drafting or pushing cards.** It is the design canon (six commitments, T1–T10 templates, anti-patterns, self-check). Pattern-matching off existing cards is not a substitute. The skill's auto-fire on trigger phrases ("make a mochi card", "push to mochi") will miss when card creation is a follow-up step in a larger task, so load it explicitly via the `Skill` tool whenever cards are in scope.
 - **Notes are flat per-domain.** `domains/<domain>/notes/<concept-slug>.md`. No per-concept folders. These are LLM-authored study notes (carry frontmatter).
 - **Harrison's own per-domain writing lives at `domains/<domain>/scratch/`.** Free-form spitball space alongside (not inside) the LLM-authored `notes/`. Not LLM-authored, no frontmatter required, any filenames Harrison wants. The tutor reads these for context but does not write to them unless asked. Use this for the kind of running-doc / roadmap / reflection writing Harrison does for himself while learning a domain.
 - **Prereqs are soft.** Edges in `curriculum.yaml` are advisory. No blocking-graph traversal.
@@ -30,6 +31,7 @@ This is Harrison's personal AI-tutor system. Project overview in `README.md`; re
 - **Never overwrite.** Each viz gets `out/artifacts/YYYY-MM-DD_HHMMSS_<topic-slug>.html`. Full history preserved.
 - **Self-contained HTML.** CDN imports, inline JS, no external assets.
 - **`live-server` runs in `out/`.** Tell user `localhost:5500/artifacts/<filename>` after writing.
+- If `live-server` is not installed as a direct binary, run `npx -y live-server --port=5500 --host=127.0.0.1 --no-browser` from `out/` in tmux.
 - **Library defaults and craft principles** in `system/visualization.md`. Read it before generating viz.
 
 ## Session shape

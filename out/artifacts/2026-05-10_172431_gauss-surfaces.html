@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Gauss Surfaces: What Counts</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <style>
+    :root {
+      --bg: #fbfaf6;
+      --fg: #1d1c18;
+      --muted: #6d6a60;
+      --field: #1f77b4;
+      --surface: #b44935;
+      --charge: #8a5a12;
+      --zero: #7a7a7a;
+      --metal: #d9d7cf;
+      --panel: #ffffff;
+      --line: #d8d4c9;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--bg); color: var(--fg); }
+    body {
+      font: 16px/1.55 ui-serif, Georgia, "Iowan Old Style", serif;
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 30px 18px 70px;
+    }
+    h1, h2, button, .label, .readout {
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+    }
+    h1 { font-size: 1.7rem; line-height: 1.15; margin: 0 0 8px; }
+    h2 { font-size: 1.1rem; margin: 26px 0 8px; }
+    p { margin: 10px 0; }
+    .muted { color: var(--muted); }
+    .field { color: var(--field); font-weight: 700; }
+    .surface { color: var(--surface); font-weight: 700; }
+    .charge { color: var(--charge); font-weight: 700; }
+    .zero { color: var(--zero); font-weight: 700; }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 16px 0 12px;
+    }
+    button {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--fg);
+      padding: 7px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.92rem;
+    }
+    button[aria-pressed="true"] {
+      background: var(--fg);
+      color: white;
+      border-color: var(--fg);
+    }
+    .figure {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      margin: 10px 0 12px;
+    }
+    svg { display: block; width: 100%; height: auto; }
+    .readout {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+      font-size: 0.93rem;
+    }
+    .readout div {
+      border-top: 1px solid var(--line);
+      padding-top: 8px;
+    }
+    .readout strong { display: block; font-size: 0.8rem; color: var(--muted); font-weight: 600; margin-bottom: 2px; }
+    .formula {
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+      color: var(--fg);
+    }
+    .hint { font-size: 0.93rem; color: var(--muted); }
+    .drag {
+      cursor: ew-resize;
+    }
+    .label {
+      font-size: 13px;
+      fill: var(--muted);
+    }
+    .small {
+      font-size: 0.92rem;
+    }
+    @media (max-width: 700px) {
+      .readout { grid-template-columns: 1fr; }
+      body { padding-left: 14px; padding-right: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Gauss surfaces: what counts</h1>
+  <p>
+    Flux is surface accounting. A face contributes when the <span class="field">field</span>
+    pierces it; it contributes zero when the field skims along it.
+  </p>
+
+  <div class="controls" aria-label="case selector">
+    <button id="case-line" type="button" aria-pressed="true">line charge</button>
+    <button id="case-sheet" type="button" aria-pressed="false">infinite sheet</button>
+    <button id="case-conductor" type="button" aria-pressed="false">conductor surface</button>
+  </div>
+
+  <div class="figure">
+    <svg id="viz" viewBox="0 0 860 430" role="img" aria-label="interactive Gauss surface visualization"></svg>
+    <div class="readout">
+      <div>
+        <strong>counted surface</strong>
+        <span id="counted"></span>
+      </div>
+      <div>
+        <strong>zero-flux surface</strong>
+        <span id="zeroed"></span>
+      </div>
+      <div>
+        <strong>result</strong>
+        <span id="result" class="formula"></span>
+      </div>
+    </div>
+  </div>
+
+  <p id="prompt" class="small"></p>
+  <p class="hint">Drag the red handle when it appears. The arbitrary dimension cancels; the measurement distance does not.</p>
+
+  <h2>The invariant</h2>
+  <p>
+    The same rule explains all three cases. For a <span class="charge">line charge</span>,
+    the field pierces the curved wall, not the caps. For a <span class="charge">sheet</span>,
+    the field pierces the two opposite faces, not the sides. For a <span class="charge">conductor</span>,
+    the inside face contributes zero because $E=0$ inside the metal.
+  </p>
+
+  <script>
+    const svg = d3.select("#viz");
+    const W = 860;
+    const H = 430;
+    const state = {
+      mode: "line",
+      radius: 120,
+      halfHeight: 86
+    };
+
+    const colors = {
+      field: getCss("--field"),
+      surface: getCss("--surface"),
+      charge: getCss("--charge"),
+      zero: getCss("--zero"),
+      metal: getCss("--metal"),
+      line: getCss("--line")
+    };
+
+    const copy = {
+      line: {
+        counted: "curved cylinder wall: E(2πrL)",
+        zeroed: "end caps: E is parallel to the caps",
+        result: "E = λ / (2πϵ₀r)",
+        prompt: "Predict: if you double r, which thing changes and which invented thing cancels?"
+      },
+      sheet: {
+        counted: "top and bottom faces: EA + EA",
+        zeroed: "side faces: E is parallel to the sides",
+        result: "E = σ / (2ϵ₀)",
+        prompt: "Predict: why does the box height not appear in the final field?"
+      },
+      conductor: {
+        counted: "outside face only: EA",
+        zeroed: "inside face: E = 0 in the conductor",
+        result: "E = σ / ϵ₀",
+        prompt: "Predict: where did the sheet's factor of 2 go?"
+      }
+    };
+
+    function getCss(name) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+
+    function setMode(mode) {
+      state.mode = mode;
+      d3.selectAll("button[id^='case-']").attr("aria-pressed", "false");
+      d3.select(`#case-${mode}`).attr("aria-pressed", "true");
+      render();
+    }
+
+    d3.select("#case-line").on("click", () => setMode("line"));
+    d3.select("#case-sheet").on("click", () => setMode("sheet"));
+    d3.select("#case-conductor").on("click", () => setMode("conductor"));
+
+    function clear() {
+      svg.selectAll("*").remove();
+      svg.append("defs").html(`
+        <marker id="arrow-field" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="${colors.field}"></path>
+        </marker>
+        <marker id="arrow-zero" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="${colors.zero}"></path>
+        </marker>
+      `);
+    }
+
+    function arrow(x1, y1, x2, y2, color = colors.field, opacity = 1, marker = "arrow-field") {
+      svg.append("line")
+        .attr("x1", x1).attr("y1", y1)
+        .attr("x2", x2).attr("y2", y2)
+        .attr("stroke", color)
+        .attr("stroke-width", 3)
+        .attr("stroke-linecap", "round")
+        .attr("opacity", opacity)
+        .attr("marker-end", `url(#${marker})`);
+    }
+
+    function label(text, x, y, fill = colors.zero, anchor = "middle") {
+      svg.append("text")
+        .attr("class", "label")
+        .attr("x", x)
+        .attr("y", y)
+        .attr("fill", fill)
+        .attr("text-anchor", anchor)
+        .text(text);
+    }
+
+    function updateReadout() {
+      const c = copy[state.mode];
+      d3.select("#counted").text(c.counted);
+      d3.select("#zeroed").text(c.zeroed);
+      d3.select("#result").text(c.result);
+      d3.select("#prompt").text(c.prompt);
+    }
+
+    function render() {
+      clear();
+      updateReadout();
+      if (state.mode === "line") renderLine();
+      if (state.mode === "sheet") renderSheet(false);
+      if (state.mode === "conductor") renderSheet(true);
+    }
+
+    function renderLine() {
+      const cx = 430;
+      const cy = 215;
+      const r = state.radius;
+      const top = 94;
+      const bottom = 336;
+      const left = cx - r;
+      const right = cx + r;
+
+      svg.append("line")
+        .attr("x1", cx).attr("y1", 50)
+        .attr("x2", cx).attr("y2", 380)
+        .attr("stroke", colors.charge)
+        .attr("stroke-width", 5)
+        .attr("stroke-linecap", "round");
+      label("line charge λ", cx + 12, 48, colors.charge, "start");
+
+      svg.append("ellipse")
+        .attr("cx", cx).attr("cy", top)
+        .attr("rx", r).attr("ry", 28)
+        .attr("fill", "rgba(180,73,53,0.06)")
+        .attr("stroke", colors.zero)
+        .attr("stroke-width", 2)
+        .attr("stroke-dasharray", "5 5");
+      svg.append("ellipse")
+        .attr("cx", cx).attr("cy", bottom)
+        .attr("rx", r).attr("ry", 28)
+        .attr("fill", "rgba(180,73,53,0.06)")
+        .attr("stroke", colors.zero)
+        .attr("stroke-width", 2)
+        .attr("stroke-dasharray", "5 5");
+      svg.append("path")
+        .attr("d", `M ${left} ${top} L ${left} ${bottom} M ${right} ${top} L ${right} ${bottom}`)
+        .attr("stroke", colors.surface)
+        .attr("stroke-width", 4)
+        .attr("stroke-linecap", "round");
+      svg.append("path")
+        .attr("d", `M ${left} ${top} C ${left} ${top + 36}, ${left} ${bottom - 36}, ${left} ${bottom}
+                    M ${right} ${top} C ${right} ${top + 36}, ${right} ${bottom - 36}, ${right} ${bottom}`)
+        .attr("stroke", colors.surface)
+        .attr("stroke-width", 6)
+        .attr("opacity", 0.25)
+        .attr("fill", "none");
+
+      for (const y of [118, 165, 215, 265, 312]) {
+        arrow(cx + 16, y, right + 82, y);
+        arrow(cx - 16, y, left - 82, y);
+      }
+      arrow(cx, top - 2, cx + 88, top - 2, colors.zero, 0.65, "arrow-zero");
+      arrow(cx, bottom + 2, cx + 88, bottom + 2, colors.zero, 0.65, "arrow-zero");
+
+      label("counted: curved wall", right + 18, 90, colors.surface, "start");
+      label("zero: caps", cx, 70, colors.zero);
+      label("r", cx + r / 2, cy - 12, colors.surface);
+      svg.append("line")
+        .attr("x1", cx).attr("y1", cy)
+        .attr("x2", right).attr("y2", cy)
+        .attr("stroke", colors.surface)
+        .attr("stroke-width", 2)
+        .attr("stroke-dasharray", "4 4");
+
+      const handle = svg.append("g")
+        .attr("class", "drag")
+        .call(d3.drag().on("drag", event => {
+          state.radius = Math.max(78, Math.min(190, event.x - cx));
+          render();
+        }));
+      handle.append("circle")
+        .attr("cx", right).attr("cy", cy)
+        .attr("r", 10)
+        .attr("fill", colors.surface);
+      handle.append("text")
+        .attr("class", "label")
+        .attr("x", right + 16).attr("y", cy + 5)
+        .attr("fill", colors.surface)
+        .text("drag r");
+
+      label("flux = E(2πrL)", 430, 404, colors.surface);
+      label("q enclosed = λL", 430, 30, colors.charge);
+    }
+
+    function renderSheet(isConductor) {
+      const cx = 430;
+      const yPlane = 215;
+      const boxW = 270;
+      const halfH = state.halfHeight;
+      const top = yPlane - halfH;
+      const bottom = yPlane + halfH;
+      const left = cx - boxW / 2;
+      const right = cx + boxW / 2;
+
+      if (isConductor) {
+        svg.append("rect")
+          .attr("x", 70).attr("y", yPlane)
+          .attr("width", 720).attr("height", 128)
+          .attr("fill", colors.metal);
+        label("metal: E = 0 inside", 84, yPlane + 106, colors.zero, "start");
+        svg.append("line")
+          .attr("x1", 70).attr("y1", yPlane)
+          .attr("x2", 790).attr("y2", yPlane)
+          .attr("stroke", colors.charge)
+          .attr("stroke-width", 5);
+      } else {
+        svg.append("line")
+          .attr("x1", 70).attr("y1", yPlane)
+          .attr("x2", 790).attr("y2", yPlane)
+          .attr("stroke", colors.charge)
+          .attr("stroke-width", 5);
+      }
+      label(isConductor ? "charged conductor surface σ" : "infinite sheet σ", 80, yPlane - 12, colors.charge, "start");
+
+      svg.append("rect")
+        .attr("x", left).attr("y", top)
+        .attr("width", boxW).attr("height", bottom - top)
+        .attr("fill", "rgba(180,73,53,0.04)")
+        .attr("stroke", colors.surface)
+        .attr("stroke-width", 3);
+
+      svg.append("line")
+        .attr("x1", left).attr("y1", top)
+        .attr("x2", right).attr("y2", top)
+        .attr("stroke", colors.surface)
+        .attr("stroke-width", 6);
+      svg.append("line")
+        .attr("x1", left).attr("y1", bottom)
+        .attr("x2", right).attr("y2", bottom)
+        .attr("stroke", isConductor ? colors.zero : colors.surface)
+        .attr("stroke-width", 6)
+        .attr("stroke-dasharray", isConductor ? "6 6" : null);
+      svg.append("line")
+        .attr("x1", left).attr("y1", top)
+        .attr("x2", left).attr("y2", bottom)
+        .attr("stroke", colors.zero)
+        .attr("stroke-width", 3)
+        .attr("stroke-dasharray", "6 6");
+      svg.append("line")
+        .attr("x1", right).attr("y1", top)
+        .attr("x2", right).attr("y2", bottom)
+        .attr("stroke", colors.zero)
+        .attr("stroke-width", 3)
+        .attr("stroke-dasharray", "6 6");
+
+      for (const x of [210, 320, 430, 540, 650]) {
+        arrow(x, yPlane - 8, x, top - 62);
+        if (!isConductor) {
+          arrow(x, yPlane + 8, x, bottom + 62);
+        } else {
+          arrow(x, yPlane + 18, x, yPlane + 58, colors.zero, 0.45, "arrow-zero");
+        }
+      }
+
+      label("counted: top face EA", cx, top - 12, colors.surface);
+      label(isConductor ? "zero: inside face" : "counted: bottom face EA", cx, bottom + 25, isConductor ? colors.zero : colors.surface);
+      label("zero: side faces", right + 16, yPlane + 5, colors.zero, "start");
+      label("face area A", cx, top + 23, colors.surface);
+
+      const handle = svg.append("g")
+        .attr("class", "drag")
+        .call(d3.drag().on("drag", event => {
+          state.halfHeight = Math.max(52, Math.min(128, Math.abs(event.y - yPlane)));
+          render();
+        }));
+      handle.append("circle")
+        .attr("cx", right).attr("cy", top)
+        .attr("r", 10)
+        .attr("fill", colors.surface);
+      handle.append("text")
+        .attr("class", "label")
+        .attr("x", right + 16).attr("y", top + 5)
+        .attr("fill", colors.surface)
+        .text("drag height");
+
+      label(isConductor ? "flux = EA" : "flux = 2EA", 430, 404, colors.surface);
+      label("q enclosed = σA", 430, 34, colors.charge);
+    }
+
+    render();
+  </script>
+</body>
+</html>
